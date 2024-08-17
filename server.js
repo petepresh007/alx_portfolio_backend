@@ -1,7 +1,7 @@
 require('dotenv').config()
 require("express-async-errors");
 const express = require('express');
-const connectDB = require('./config/db');
+const { connectDB, connectDBOnline } = require('./config/db');
 const errorHandler = require("./middleware/errorhandler");
 //const dotenv = require('dotenv');
 const cookieParser = require("cookie-parser")
@@ -47,7 +47,8 @@ let dbConnection;
 
 async function starter() {
     try {
-        dbConnection = await connectDB();
+        //dbConnection = await connectDB();
+        dbConnection  = await connectDBOnline();
         if (dbConnection) {
             console.log('Connected to the database successfully...');
         }

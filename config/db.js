@@ -19,4 +19,21 @@ const connectDB = async () => {
     }
 };
 
-module.exports = connectDB;
+const connectDBOnline = async () => {
+    try {
+        const con = mongoose.connect(process.env.ONLINE_URI, {
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
+        });
+        return con
+    } catch (err) {
+        console.error(err.message);
+        process.exit(1);
+    }
+};
+
+
+module.exports = {
+    connectDB,
+    connectDBOnline
+};
