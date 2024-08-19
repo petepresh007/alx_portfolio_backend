@@ -1,0 +1,299 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif ;
+}
+
+body {
+  /* font-family: "Roboto", sans-serif; */
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f8f8;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 
+header {
+ position: relative;
+} */
+
+.home img {
+  width: 100%;
+  height: 450px;
+}
+
+nav a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.458);
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+nav ul {
+  display: flex;
+  gap: 30px;
+}
+
+ul li {
+  list-style: none;
+}
+
+.header-stuff {
+  width: 100%;
+  color: white;
+  background: rgba(255, 255, 255, 0.898);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 5rem;
+  box-shadow: 2px 2px 2px gray;
+}
+
+.location {
+  color: rgba(0, 0, 0, 0.458);
+  font-weight: bold;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.home {
+  position: relative;
+}
+
+.search {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.search-box {
+  position: absolute;
+  top: 5%;
+  width: 100%;
+}
+
+.search input {
+  width: 100%;
+  padding: 1rem;
+  outline: none;
+  border: none;
+  background: rgba(255, 255, 255, 0.898);
+  font-size: 1.2rem;
+  border-radius: 12px;
+}
+
+.search-box h1 {
+  font-size: 5rem;
+  text-align: center;
+  color: red;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.food-search img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin: 1px;
+}
+
+.food-search {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.restaurant {
+  margin: 2rem 10%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  color: gray;
+}
+
+.shop {
+  width: 100px;
+  height: 100px;
+}
+
+.restaurant-center {
+  text-align: center;
+  width: 250px;
+  padding: 1rem;
+  height: 220px;
+  background: white;
+  cursor: pointer;
+}
+
+.restuarant-details {
+  border: 1px solid gray;
+}
+
+.res {
+  margin: 2rem 10%;
+}
+
+.res-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: .5rem;
+  margin-bottom: 2rem;
+  background: white;
+  color: gray;
+}
+
+.res ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.res ul a {
+  color: gray;
+}
+
+.restaurant-menu-center {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  color: gray;
+}
+
+.restaurant-menu-center img {
+  width: 100px;
+  height: 100px;
+}
+
+.res-btn-img {
+  display: flex;
+  flex-direction: column;
+}
+
+.res-btn-img button {
+  border: none;
+  outline: none;
+  padding: .5rem;
+  background: #eee;
+  cursor: pointer;
+}
+
+.menu {
+  margin: 2rem 10%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  color: gray;
+}
+
+.menu-center {
+  background: white;
+  padding: 1rem;
+  height: 255px;
+  width: 250px;
+}
+
+.menu-center img {
+  width: 220px;
+  height: 150px;
+}
+.menu-center button{
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: .5rem;
+  cursor: pointer;
+  color: gray;
+}
+.login{
+  margin-top: 10rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-center{
+  background: white;
+  padding: 1rem;
+  width: 400px;
+  color: gray;
+  font-size: 1.5rem;
+}
+.login-center input{
+  padding: .8rem;
+  border: 1px solid rgba(128, 128, 128, 0.451);
+  outline: none;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  width: 100%;
+}
+.already-registered{
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.already-registered div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login-center button{
+  border: none;
+  outline: none;
+  padding: .8rem;
+  width: 100%;
+  background: rgba(18, 142, 224, 0.962);
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1em;
+  }
+
+  .flex {
+    flex-direction: column;
+  }
+}
