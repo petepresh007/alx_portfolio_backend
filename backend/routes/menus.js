@@ -24,7 +24,7 @@ router.post('/create-menu/:restaurantId', adminAuth, upload.single('file'), asyn
     try {
         //s3
         //const imageUrl = req.file.location;
-        if (!name || !description || !price || !category || !availability || !req.file) {
+        if (!name || !description || !price || !category || !req.file) {
             throw new BadrequestError('all fields are needed')
         }
 
@@ -42,8 +42,8 @@ router.post('/create-menu/:restaurantId', adminAuth, upload.single('file'), asyn
             availability,
             file: req.file.filename,
             restaurant: restaurantId,
-            protein,
-            others
+            protein: protein ? protein : [],
+            others: others ? others : []
         })
         if (createdMenu) {
             await createdMenu.save();

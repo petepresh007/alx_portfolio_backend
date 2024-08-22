@@ -7,6 +7,7 @@ const Order = require('../models/Order');
 const Admin = require('../models/Admin');
 const { sendMail } = require('../middleware/sendEmail');
 require("dotenv").config();
+const Notification = require('../models/notification');
 
 
 
@@ -14,8 +15,18 @@ require("dotenv").config();
 /**ROUTE post api/order/place-order */
 /**protected */
 router.post('/place-order', auth, async function (req, res, next) {
+    const {
+        items,
+        restaurant,
+        protein,
+        quantity,
+        totalAmount,
+        deliveryAddress,
+        paymentMethod,
+        pack
+    } = req.body;
 
-    const { items, restaurant, protein, quantity, totalAmount, deliveryAddress, paymentMethod, pack } = req.body
+
     const user = await User.findById(req.user.id);
 
     if (!user) {
@@ -55,6 +66,7 @@ router.post('/place-order', auth, async function (req, res, next) {
             paymentMethod,
             pack
         })
+
         if (newOrder) {
             await newOrder.save();
             const to = user.email;
@@ -64,9 +76,20 @@ router.post('/place-order', auth, async function (req, res, next) {
                 Your order with id: ${newOrder._id} has been successfully recieved.<br>
                 if confirmed, you will be notified. 
             `
+
+            const newNotification = new Notification({
+                user: req.user.id,
+                message: `Your order #${newOrder._id} has been recieved.`,
+                type: 'order_received',
+                orderId: newOrder._id
+            });
+
+            await newNotification.save()
+
             await sendMail(from, to, subject, message);
             res.status(201).json({ msg: newOrder });
         }
+
     } catch (error) {
         next(error);
     }
@@ -82,7 +105,7 @@ router.get('/my-orders', auth, async (req, res, next) => {
     }
 
     try {
-        const orders = await Order.find({ user: req.user.id, status:"Confirmed" })
+        const orders = await Order.find({ user: req.user.id, status: "Confirmed" })
             .populate('user', 'name email')
             .populate('items.menuItem', 'name price')
             .populate('restaurant', 'name address')
@@ -184,7 +207,7 @@ router.delete('/user-del/:id', auth, async (req, res, next) => {
     try {
         const delorder = await Order.findOneAndDelete({ user: req.user.id, _id: req.params.id });
         if (delorder) {
-            const data = await Order.find({ user: req.user.id, status:"Confirmed" })
+            const data = await Order.find({ user: req.user.id, status: "Confirmed" })
                 .populate('user', 'name email')
                 .populate('items.menuItem', 'name price')
                 .populate('restaurant', 'name address')
@@ -230,7 +253,7 @@ router.put('/:id/favorite', auth, async (req, res, next) => {
 
         order.favorite = !order.favorite;
         await order.save();
-        const orders = await Order.find({ user: req.user.id, status:"Confirmed" })
+        const orders = await Order.find({ user: req.user.id, status: "Confirmed" })
             .populate('user', 'name email')
             .populate('items.menuItem', 'name price')
             .populate('restaurant', 'name address')
@@ -266,7 +289,7 @@ router.get('/my-orders-cart', auth, async (req, res, next) => {
     }
 
     try {
-        const orders = await Order.find({ user: req.user.id, status:"Pending" })
+        const orders = await Order.find({ user: req.user.id, status: "Pending" })
             .populate('user', 'name email')
             .populate('items.menuItem', 'name price')
             .populate('restaurant', 'name address')
@@ -276,5 +299,66 @@ router.get('/my-orders-cart', auth, async (req, res, next) => {
         next(err);
     }
 });
+
+//delivered orders
+router.get('/my-orders-delivered', auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+        throw new NotFoundError('No user was found with the provided id.')
+    }
+
+    try {
+        const orders = await Order.find({ user: req.user.id, status: "Delivered" })
+            .populate('user', 'name email')
+            .populate('items.menuItem', 'name price')
+            .populate('restaurant', 'name address')
+            .sort({ orderDate: -1 });
+        res.json(orders);
+    } catch (err) {
+        next(err);
+    }
+});
+
+
+router.put('/delivered/:orderId', adminAuth, async (req, res, next) => {
+    const {orderId} = req.params;
+
+    const admin = await Admin.findById(req.admin.id);
+
+    if(!admin){
+        throw new NotFoundError('No user was found with the provided id');
+    }
+
+    try {
+        const order = await Order.findOne({_id: orderId});
+        if ((order.status !== 'Confirmed')){
+            throw new BadrequestError('order must either be confirmed or prepared');
+        }
+        order.status = 'Delivered';
+        await order.save();
+
+        const setNotification = new Notification({
+            user: order.user._id,
+            message: `Your order #${order._id} has been delivered.`,
+            type: 'order_delivered',
+            orderId: order._id
+        });
+
+        await setNotification.save();
+
+        const orders = await Order.find({})
+            .populate('user', 'name email')
+            .populate('items.menuItem', 'name price')
+            .populate('restaurant', 'name address')
+            .sort({ orderDate: -1 });
+
+        res.status(200).json({msg:'delivery activated', data: orders});
+    } catch (error) {
+        next(error);
+    }
+});
+
+//Confirm order
 
 module.exports = router

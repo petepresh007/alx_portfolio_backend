@@ -8,6 +8,7 @@ const crypto = require('crypto');
 const { fronturl } = require('../fronturl');
 const { sendMail } = require('../middleware/sendEmail');
 const Order = require('../models/Order');
+const app = express()
 
 
 dotenv.config();
@@ -109,7 +110,7 @@ router.post('/login', async (req, res, next) => {
                     secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
                     maxAge: 360000 * 1000, // Cookie expiration time in milliseconds
                 })
-                
+
                 res.status(200).json({ user: user.name, id: user._id, phone: user.phoneNumber });
             }
         );
@@ -198,29 +199,39 @@ router.get('/user', auth, async (req, res, next) => {
 
 
 //user change password
-router.put('/change-passord', auth, async (req, res, next) => {
+router.put('/change-password', auth, async (req, res, next) => {
     const { password, newpassword, confirmpassword } = req.body;
     try {
         if (!password || !newpassword || !confirmpassword) {
-            throw new BadrequestError('enter all fields to change your password')
+            throw new BadrequestError(
+                'All available fields are required to change your password'
+            );
         }
+
         const user = await User.findById(req.user.id);
         if (!user) {
             throw new NotFoundError('No user was found with the provided id..')
         }
         const checkPassword = await bcrypt.compare(password, user.password);
         if (!checkPassword) {
-            throw new BadrequestError('enter a valid password');
+            throw new BadrequestError('The current password you entered is not valid. please, try again');
         }
 
         if (newpassword !== confirmpassword) {
-            throw new BadrequestError('enter the same value for both password fileds..');
+            throw new BadrequestError('Your password does not match. Please, try again.');
         }
         const salt = await bcrypt.genSalt(10) //10 salt rounds
         const changedPassword = await bcrypt.hash(newpassword, salt);
 
         user.password = changedPassword;
         await user.save();
+
+        res.cookie('token', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            expires: new Date(0)
+        })
+
         res.status(200).json({ msg: 'password changed successfully...' });
     } catch (error) {
         next(error);
@@ -230,17 +241,52 @@ router.put('/change-passord', auth, async (req, res, next) => {
 //user change username
 router.put('/change-username', auth, async (req, res, next) => {
     const { name } = req.body;
+    const { token } = req.cookies
     try {
+        if (!token) {
+            throw new NotAuthorizedError('you token is not valid')
+        }
         if (!name) {
             throw new BadrequestError('please enter a username');
         }
         const user = await User.findById(req.user.id);
+        if (user.name === name) {
+            throw new ConflictError(`"${name}" is your existing name. Please, enter a new name`)
+        }
         if (!user) {
             throw new BadrequestError('No user was found with the provide id..');
         }
         user.name = name;
         await user.save();
-        res.status(200).json({ msg: `you changed your username to "${user.name}"` })
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        res.status(200).json({ msg: `you changed your username to "${user.name}"`, decode })
+    } catch (error) {
+        next(error);
+    }
+})
+
+
+//change username
+router.put('/change-phone-num', auth, async (req, res, next) => {
+    const { phoneNumber } = req.body;
+
+    try {
+        if (!phoneNumber) {
+            throw new BadrequestError('please enter a phone number');
+        }
+        const user = await User.findById(req.user.id);
+        if (user.phoneNumber === phoneNumber) {
+            throw new ConflictError(
+                `The phone number you provided is the same with the existing phone number. Please enter a new phoneNumber
+                `
+            )
+        }
+        if (!user) {
+            throw new BadrequestError('No user was found with the provide id..');
+        }
+        user.phoneNumber = phoneNumber;
+        await user.save();
+        res.status(200).json({ msg: `you changed your phone number to "${user.phoneNumber}"` })
     } catch (error) {
         next(error);
     }
@@ -301,7 +347,28 @@ router.post('/reset-password/:token', async (req, res) => {
     await userData.save();
 
     res.status(200).json({ msg: `password changed successfully...` })
-})
+});
+
+
+
+router.delete('/user-delete-account', auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+        throw new NotFoundError('No user was found with the provided id');
+    }
+
+    try {
+        const del = await User.findByIdAndDelete(req.user.id);
+        res.cookie('token', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            expires: new Date(0)
+        })
+        res.status(200).json({msg: `Goodbye ${del.name}`});
+    } catch (error) {  
+        next(error);
+    }
+});
 
 
 module.exports = router;

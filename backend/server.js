@@ -35,7 +35,9 @@ app.use('/api/menu', require('./routes/menus'));
 app.use('/api/order', require('./routes/orders'));
 app.use('/api/restaurants', require('./routes/restaurants'));
 app.use('/api/payment', require('./routes/payments'));
+app.use('/api/notification', require('./routes/notification'));
 // Other routes here...
+
 
 const PORT = process.env.PORT || 5000;
 

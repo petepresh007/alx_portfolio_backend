@@ -6,6 +6,7 @@ const { BadrequestError, NotFoundError, ConflictError } = require('../errors');
 const Admin = require('../models/Admin');
 
 
+
 // Add a new restaurant (Admin only)
 router.post('/add', adminAuth, async (req, res, next) => {
     const { name, address, phone, email } = req.body;
@@ -35,30 +36,22 @@ router.post('/add', adminAuth, async (req, res, next) => {
     }
 });
 
-// Add a menu item to a restaurant (Admin only)
-// router.post('/:restaurantId/menu/add', adminAuth, async (req, res, next) => {
-//     const { name, description, price, image } = req.body;
-//     const { restaurantId } = req.params;
-//     try {
-//         const menuItem = new MenuItem({ name, description, price, image, restaurant: restaurantId });
-//         await menuItem.save();
-
-//         const restaurant = await Restaurant.findById(restaurantId);
-//         restaurant.menu.push(menuItem._id);
-//         await restaurant.save();
-
-//         res.status(201).json({ message: 'Menu item added successfully', menuItem });
-//     } catch (error) {
-//         next(error);
-//     }
-// });
-
-
 
 // Get all restaurants
 router.get('/', async (req, res, next) => {
     try {
         const restaurants = await Restaurant.find().populate('menu');
+        res.status(200).json(restaurants);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get('/admin-get', adminAuth, async (req, res, next) => {
+    try {
+        const restaurants = await Restaurant.find()
+            .populate('menu');
+
         res.status(200).json(restaurants);
     } catch (error) {
         next(error);
@@ -95,6 +88,7 @@ router.put('/:id', adminAuth, async (req, res, next) => {
         }
         const ourRestaurant = await Restaurant.findById(req.params.id);
 
+
         const restaurant = await Restaurant.findByIdAndUpdate(req.params.id, {
             name: name ? name : ourRestaurant.name,
             address: address ? address : ourRestaurant.address,
@@ -107,7 +101,9 @@ router.put('/:id', adminAuth, async (req, res, next) => {
         if (!restaurant) {
             return res.status(404).json({ message: 'Restaurant not found' });
         }
-        res.status(200).json({ message: 'Restaurant updated successfully', restaurant });
+        const data = await Restaurant.find()
+            .populate('menu');
+        res.status(200).json({ message: 'Restaurant updated successfully', restaurant, data });
     } catch (error) {
         next(error);
     }
@@ -120,10 +116,92 @@ router.delete('/:id', adminAuth, async (req, res, next) => {
         if (!restaurant) {
             return res.status(404).json({ message: 'Restaurant not found' });
         }
-        res.status(200).json({ message: 'Restaurant deleted successfully' });
+        const data = await Restaurant.find()
+            .populate('menu');
+        res.status(200).json({ message: 'Restaurant deleted successfully', data: data });
     } catch (error) {
         next(error);
     }
 });
+
+
+//RICE
+router.get('/get/getrice', async (req, res, next) => {
+    try {
+        const rice = await Restaurant.find({})
+            .populate({
+                path: 'menu',
+                match: { category: "Rice" }
+            })
+            .exec()
+        return res.status(200).json(rice)
+    } catch (error) {
+        next(error)
+    }
+})
+
+//BEANS
+router.get('/get/getbeans', async (req, res, next) => {
+    try {
+        const rice = await Restaurant.find({})
+            .populate({
+                path: 'menu',
+                match: { category: "Beans" }
+            })
+            .exec()
+        return res.status(200).json(rice)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+//SWALLOW
+router.get('/get/getswallow', async (req, res, next) => {
+    try {
+        const rice = await Restaurant.find({})
+            .populate({
+                path: 'menu',
+                match: { category: "Swallow" }
+            })
+            .exec()
+        return res.status(200).json(rice)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
+router.get('/get/search', async (req, res, next) => {
+    const { term } = req.query;
+
+    if (!term) {
+        return res.status(400).json({ msg: 'Please provide a search term.' });
+    }
+
+    try {
+        // Search for restaurants by name or menu category
+        const restaurants = await Restaurant.find({
+            $or: [
+                { name: { $regex: term, $options: 'i' } }, // Search by restaurant name
+                { 'menu.category': { $regex: term, $options: 'i' } } // Search by menu category
+            ]
+        }).populate({
+            path: 'menu',
+            match: { category: { $regex: term, $options: 'i' } }, // Match the category field in the menu
+        });
+
+        if (restaurants.length === 0) {
+            return res.status(404).json({ msg: 'No restaurants or menu items found matching that term.' });
+        }
+
+        res.status(200).json(restaurants);
+    } catch (err) {
+        next(err);
+    }
+});
+
+
+
 
 module.exports = router;

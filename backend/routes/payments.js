@@ -3,9 +3,10 @@ const router = express.Router();
 const Payment = require('../models/Payment');
 const Order = require('../models/Order');
 const { auth, adminAuth } = require('../middleware/auth');
-const {client} = require('../config/paypal');
-const { NotFoundError } = require('../errors');
+const { client } = require('../config/paypal');
+const { NotFoundError, BadrequestError } = require('../errors');
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
+const Notification = require('../models/notification');
 
 
 
@@ -40,38 +41,64 @@ router.post('/create-payment', auth, async (req, res, next) => {
 
 //pay pal capture payment
 router.post('/capture-payment', auth, async (req, res, next) => {
-    const { orderID } = req.body;
+    const { orderID, order } = req.body;
+    const myOrder = await Order.findById(order);
+
+    if(!myOrder){
+        throw new BadrequestError('No order was found.');
+    }
 
     try {
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
         request.requestBody({});
         const captureResult = await client.execute(request);
-
+        
         // Save payment details to the database
         const payment = new Payment({
             user: req.user.id,
-            order: captureResult.result.purchase_units[0].payments.captures[0].id,
-            amount: captureResult.result.purchase_units[0].amount.value,
+            order,
+            amount: captureResult.result.purchase_units[0].payments.captures[0].amount.value,
             paymentMethod: 'PayPal',
             transactionId: captureResult.result.purchase_units[0].payments.captures[0].id,
             status: 'Completed'
         });
-
+        if(payment){
+            myOrder.paymentStatus = 'Paid';
+            myOrder.status = 'Confirmed';
+            await myOrder.save(); 
+        }
         await payment.save();
 
-        res.status(201).json({ message: 'Payment captured successfully', payment });
+        //notificatio stays here
+        const newNotification = new Notification({
+            user: req.user.id,
+            message: `Your order #${myOrder._id} has been confirmed.`,
+            type: 'order_confirmed',
+            orderId: order
+        });
+
+        await newNotification.save()
+
+        const orders = await Order.find({ user: req.user.id, status: "Pending" })
+            .populate('user', 'name email')
+            .populate('items.menuItem', 'name price')
+            .populate('restaurant', 'name address')
+            .sort({ orderDate: -1 });
+
+        res.status(201).json({ message: 'Payment captured successfully', payment, data: orders });
     } catch (error) {
         next(error);
     }
 });
 /****PAY PAL  */
 
+
 // Create a new payment
 router.post('/create', auth, async (req, res, next) => {
     const { orderId, amount, paymentMethod, transactionId } = req.body;
     try {
         const order = await Order.findById(orderId);
-    
+
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }

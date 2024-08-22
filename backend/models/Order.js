@@ -22,7 +22,7 @@ const OrderSchema = new mongoose.Schema({
     restaurant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Restaurant',
-        required: true,
+        //required: true,
     },
     protein: Array,
     quantity: {
