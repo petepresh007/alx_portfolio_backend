@@ -10,7 +10,6 @@ require("dotenv").config();
 const Notification = require('../models/notification');
 
 
-
 /**ORDER ITEM */
 /**ROUTE post api/order/place-order */
 /**protected */
@@ -143,13 +142,13 @@ router.put('/approver-user-order/:orderId', adminAuth, async function (req, res,
 
     const admin = await Admin.findById(req.admin.id);
     if (!admin) {
-        throw new NotFoundError(`No admin was found with the supplied id: ${orderId}`);
+        throw new NotFoundError(`No admin was found with the supplied id: ${req.admin.id}`);
     }
 
     try {
         const order = await Order.findById(orderId);
         if (!order) {
-            throw new NotFoundError('No order was found with the provided id...')
+            throw new NotFoundError('No order was found with the provided id..')
         }
         const user = await User.findById(order.user);
         if (!user) {
@@ -157,22 +156,40 @@ router.put('/approver-user-order/:orderId', adminAuth, async function (req, res,
         }
 
         if (order.status === 'Confirmed') {
-            return res.status(200).json({ msg: `order has already been approved...` })
+            throw new BadrequestError('order has already been approved...')
         }
+
+        if (order.status === 'Delivered') {
+            throw new BadrequestError('Order has been delivered already')
+        }
+
         order.status = 'Confirmed';
         await order.save();
         const data = await Order.find({})
-            .sort({ createdAt: -1 });
+            .populate('user', 'name email phoneNumber')
+            .populate('items.menuItem', 'name price file')
+            .populate('restaurant', 'name address')
+            .sort({ orderDate: -1 });
 
         //await newOrder.save();
+
+        const setNotification = new Notification({
+            user: user._id,
+            message: `Your order #${order._id} has been approved.`,
+            type: 'order_confirmed',
+            orderId: order._id
+        });
+
+        await setNotification.save();
+
         const to = user.email;
         const from = process.env.SMTP_MAIL
         const subject = `Hi ${user.name}`;
         const message = `
-                Your order with id: ${order._id} your order has been approved.<br>
+                Your order with id: ${order._id} your order has been confirmed.<br>
                 you will be contacted very soon. 
             `
-        await sendMail(from, to, subject, message)
+        await sendMail(from, to, subject, message);
         res.status(200).json({ msg: `order confirmed`, data: data })
     } catch (error) {
         next(error);
@@ -182,15 +199,19 @@ router.put('/approver-user-order/:orderId', adminAuth, async function (req, res,
 
 //delete order admin
 router.delete('/del/:id', adminAuth, async (req, res, next) => {
-    const admin = await User.findById(req.admin.id);
+    const admin = await Admin.findById(req.admin.id);
     if (!admin) {
-        throw new NotFoundError('No user was found with the supplied id')
+        throw new NotFoundError('No admin was found with the supplied id')
     }
     try {
         const delorder = await Order.findOneAndDelete({ _id: req.params.id });
         if (delorder) {
             const data = await Order.find({})
-                .sort({ orderDate: -1 });
+                .sort({ orderDate: -1 })
+                .populate('user', 'name email phoneNumber')
+                .populate('items.menuItem', 'name price file')
+                .populate('restaurant', 'name address')
+
             res.status(200).json({ msg: 'deleted successfully', data: data });
         }
     } catch (error) {
@@ -228,8 +249,8 @@ router.get('/all', adminAuth, async (req, res, next) => {
     try {
         const orders = await Order.find({})
             .sort({ orderDate: -1 })
-            .populate('user', 'name email')
-            .populate('items.menuItem', 'name price')
+            .populate('user', 'name email phoneNumber')
+            .populate('items.menuItem', 'name price file')
             .populate('restaurant', 'name address');
         if (orders) {
             res.status(200).json(orders)
@@ -238,6 +259,7 @@ router.get('/all', adminAuth, async (req, res, next) => {
         next(error)
     }
 });
+
 
 
 // @route  PUT api/order/:id/favorite
@@ -322,24 +344,35 @@ router.get('/my-orders-delivered', auth, async (req, res, next) => {
 
 
 router.put('/delivered/:orderId', adminAuth, async (req, res, next) => {
-    const {orderId} = req.params;
+    const { orderId } = req.params;
 
     const admin = await Admin.findById(req.admin.id);
 
-    if(!admin){
+    if (!admin) {
         throw new NotFoundError('No user was found with the provided id');
     }
 
     try {
-        const order = await Order.findOne({_id: orderId});
-        if ((order.status !== 'Confirmed')){
+        const order = await Order.findOne({ _id: orderId });
+
+        if ((order.status !== 'Confirmed')) {
             throw new BadrequestError('order must either be confirmed or prepared');
         }
+
+        if ((order.status === 'Delivered')) {
+            throw new BadrequestError('the order has been delivered already');
+        }
+
+        const user = await User.findById(order.user);
+        if (!user) {
+            throw new NotFoundError('No user was found with the provided id');
+        }
+
         order.status = 'Delivered';
         await order.save();
 
         const setNotification = new Notification({
-            user: order.user._id,
+            user: user._id,
             message: `Your order #${order._id} has been delivered.`,
             type: 'order_delivered',
             orderId: order._id
@@ -348,17 +381,26 @@ router.put('/delivered/:orderId', adminAuth, async (req, res, next) => {
         await setNotification.save();
 
         const orders = await Order.find({})
-            .populate('user', 'name email')
-            .populate('items.menuItem', 'name price')
+            .populate('user', 'name email phoneNumber')
+            .populate('items.menuItem', 'name price file')
             .populate('restaurant', 'name address')
             .sort({ orderDate: -1 });
 
-        res.status(200).json({msg:'delivery activated', data: orders});
+        //send delivery mail
+        const to = user.email;
+        const from = process.env.SMTP_MAIL
+        const subject = `Hi ${user.name}`;
+        const message = `
+                Your order with id: ${order._id} your order was succesfully delivered to you today.
+            `
+        await sendMail(from, to, subject, message)
+
+        //response
+        res.status(200).json({ msg: 'delivery activated', data: orders });
     } catch (error) {
         next(error);
     }
 });
 
-//Confirm order
 
 module.exports = router

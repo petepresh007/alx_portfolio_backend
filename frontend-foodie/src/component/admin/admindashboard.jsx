@@ -29,7 +29,7 @@ export const Admin = () => {
                 <section className="admin-header">
                     <Link to='/admin/'>Home</Link>
                     <Link to='/admin/manageusers'>Manage Users</Link>
-                    <Link>Manage Orders</Link>
+                    <Link to='/admin/manageorders'>Manage Orders</Link>
                     <Link to='/admin/manageres'>Manage Restaurant</Link>
                     <Link to='/admin/managemenu'>Manage Menu</Link>
                 </section>

@@ -20,6 +20,6 @@ module.exports.sendMail = async (sent_from, send_to, subject, message) => {
     }
 
     transporter.sendMail(mailOptions, (err, data) => {
-        // if (err) console.log(err);
+        if (err) console.log(err);
     })
 }

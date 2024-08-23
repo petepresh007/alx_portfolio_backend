@@ -397,3 +397,13 @@
     padding: 1rem;
     margin-bottom: 1rem;
 }
+
+.order-check{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.order-check p{
+    margin: 0;
+}

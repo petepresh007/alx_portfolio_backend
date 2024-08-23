@@ -49,8 +49,8 @@ let dbConnection;
 
 async function starter() {
     try {
-        dbConnection = await connectDB();
-        //dbConnection  = await connectDBOnline();
+        //dbConnection = await connectDB();
+        dbConnection  = await connectDBOnline();
         if (dbConnection) {
             console.log('Connected to the database successfully...');
         }

@@ -31,7 +31,9 @@ import { CreateRestaurant } from './component/admin/createrestaurant';
 import { CreateMenu } from './component/admin/createmenu';
 import { UpdateRestaurant } from './component/admin/updaterestaurant';
 import { ManageMenu } from './component/admin/managemenu';
-import {EditMenu} from './component/admin/editMenu';
+import { EditMenu } from './component/admin/editMenu';
+import { OrderPage } from './component/admin/orders';
+import { SingleOrder } from './component/admin/singleOrder';
 
 
 import { AppProvider } from "./component/context";
@@ -86,6 +88,8 @@ function App() {
                 <Route path='manageres/updateres/:id' element={<UpdateRestaurant />} />
                 <Route path='managemenu' element={<ManageMenu />} />
                 <Route path='managemenu/editmenu/:id' element={<EditMenu />} />
+                <Route path='manageorders' element={<OrderPage />} />
+                <Route path='manageorders/order/:id' element={<SingleOrder />} />
               </Route>
             </Routes>
           </section>
