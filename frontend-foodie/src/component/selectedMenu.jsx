@@ -3,6 +3,7 @@ import {useAppContext} from '../component/context';
 import {menu, order, url} from "../server";
 import {useEffect, useState} from "react";
 import axios from 'axios';
+import FoodieAnimation from './foodieAnimation';
 
 
 export const SelectedMenu = () => {
@@ -33,7 +34,7 @@ export const SelectedMenu = () => {
 
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <FoodieAnimation/>;
     }
 
     if (!selectedMenu) {

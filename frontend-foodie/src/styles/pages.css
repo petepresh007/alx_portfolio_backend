@@ -51,6 +51,9 @@
 
 .cart h1 {
     text-align: center;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: .1rem;
 }
 
 .cart-center button {
