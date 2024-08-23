@@ -26,11 +26,12 @@ export const Home = () => {
         getRestaurant();
     }, [dispatch]);
 
-    
+
     useEffect(() => {
         async function getMenu() {
             try {
                 const { data } = await axios.get(`${menu}/all`);
+                //console.log(data)
                 dispatch({ type: 'SET_MENU', payload: data });
             } catch (error) {
                 console.log(error);
@@ -42,13 +43,13 @@ export const Home = () => {
     }, [dispatch]);
 
 
+    
     useEffect(() => {
         async function getFav() {
             try {
                 const { data } = await axios.get(`${order}/favorites`, {
                     withCredentials: true
                 });
-                console.log(data);
                 dispatch({ type: 'SET_FAVORITE_ORDERS', payload: data });
             } catch (error) {
                 console.log(error);
@@ -68,26 +69,10 @@ export const Home = () => {
 
 
     return (
-        <div className="home">
-            <img src="/image/fd5.jpg" alt="img" />
-            <div className="search-box">
-                <h1>
-                    F
-                    <span className="food-search">
-                        <img src="/image/fd4.png" alt="" />
-                        <img src="/image/fd4.png" alt="" />
-                    </span>
-                    D
-                </h1>
-                <div className='search'>
-                    <input
-                        type="search"
-                        placeholder='Food Drink ...'
-                    />
-                </div>
-            </div>
+        <div className="">
+            <img src="/image/home-img.png" alt="img" />
 
-            <section className="restaurant">
+            <section className="">
                 {
                     state.restaurants && state.restaurants.map((data) => {
                         return <div
@@ -108,12 +93,18 @@ export const Home = () => {
             </section>
 
             <>
-                <h1 style={{textAlign:"center", color:"gray"}}>Menu</h1>
-                <section className="menu">
+                <h1 style={{ textAlign: "center", color: "gray" }}>Menu</h1>
+                <section className="">
                     {
                         state.menu && state.menu.map(data => {
                             return (
-                                <div className="menu-center" key={data._id}>
+                                <div
+                                    className="menu-center"
+                                    key={data._id}
+                                    onClick={() => {
+                                        go(`/selected-menu/${data._id}`)
+                                    }}
+                                >
                                     <img src={`${url}/upload/${data.file}`} alt="" />
                                     <p>{data.name}</p>
                                     <button>Checkout</button>
@@ -131,15 +122,15 @@ export const Home = () => {
                         state.favoriteOrders && state.favoriteOrders.map(data => {
                             return (
                                 <div key={data._id}>
-                                {
-                                    data.items.map(data => {
-                                        return <div className="menu-center" key={data.menuItem._id}>
-                                            <img src={`${url}/upload/${data.menuItem.file}`} alt="" />
-                                            <p>{data.menuItem.name}</p>
-                                            <button>Checkout</button>
-                                        </div>
-                                    })
-                                }
+                                    {
+                                        data.items.map(data => {
+                                            return <div className="menu-center" key={data.menuItem._id}>
+                                                <img src={`${url}/upload/${data.menuItem.file}`} alt="" />
+                                                <p>{data.menuItem.name}</p>
+                                                <button>Checkout</button>
+                                            </div>
+                                        })
+                                    }
                                     {/* <div className="menu-center" key={data._id}>
                                          <img src={`${url}/upload/${data.file}`} alt="" />
                                         <p>{data.name}</p>
