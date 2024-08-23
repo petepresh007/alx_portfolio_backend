@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AiOutlineFile, AiOutlineUpload } from 'react-icons/ai';
 import axios from 'axios';
-import {menu} from '../../server';
+import { menu } from '../../server';
 
 
-export const CreateMenu = () => {
+export const EditMenu = () => {
     const { id } = useParams();
     axios.defaults.withCredentials = true;
 
@@ -16,7 +16,7 @@ export const CreateMenu = () => {
     const [category, setCategory] = useState('')
     const [file, setFile] = useState('')
 
-    async function HandleMenu(e){
+    async function HandleMenu(e) {
         e.preventDefault();
 
         try {
@@ -27,7 +27,7 @@ export const CreateMenu = () => {
             menuItem.append('price', price);
             menuItem.append('category', category);
             menuItem.append('file', file);
-            const { data } = await axios.post(`${menu}/create-menu/${id}`, menuItem);
+            const { data } = await axios.put(`${menu}/update/${id}`, menuItem);
             alert(data.msg)
         } catch (error) {
             alert(error.response.data.msg);

@@ -20,7 +20,9 @@ const initialState = {
     beans: [],
     admin: null,
     adminGetUser: [],
-    adminGetRestaurant: []
+    adminGetRestaurant: [],
+    adminGetMenu: [],
+    adminGetOrders: []
     // Add other state properties as needed
 }
 
@@ -42,7 +44,9 @@ const ACTIONS = {
     SET_BEANS: 'SET_BEANS',
     SET_ADMIN: 'SET_ADMIN',
     SET_ADMIN_USER: 'SET_ADMIN_USER',
-    SET_ADMIN_RES: 'SET_ADMIN_RES'
+    SET_ADMIN_RES: 'SET_ADMIN_RES',
+    SET_ADMIN_MENU: 'SET_ADMIN_MENU',
+    SET_ADMIN_ORDER: 'SET_ADMIN_ORDER'
     // Add other actions as needed
 };
 
@@ -134,6 +138,16 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 adminGetRestaurant: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_ADMIN_MENU:
+            return {
+                ...state,
+                adminGetMenu: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_ADMIN_ORDER:
+            return {
+                ...state,
+                adminGetOrders: action.payload, // Update the entire list
             };
         default:
             return state;

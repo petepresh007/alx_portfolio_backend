@@ -60,7 +60,7 @@ router.get('/admin-get', adminAuth, async (req, res, next) => {
 
 
 // Get a specific restaurant by ID
-router.get('/:id', async (req, res, next) => {
+router.get('single/:id', async (req, res, next) => {
     try {
         const restaurant = await Restaurant.findById(req.params.id).populate('menu');
         if (!restaurant) {

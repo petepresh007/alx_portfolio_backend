@@ -27,9 +27,11 @@ import { Admin } from './component/admin/admindashboard';
 import { AdminHome } from './component/admin/home';
 import { ManageUsers } from './component/admin/manageusers';
 import { ManageRestaurants } from './component/admin/managerestaurant';
-import {CreateRestaurant} from './component/admin/createrestaurant';
-import {CreateMenu} from './component/admin/createmenu';
-import {UpdateRestaurant} from './component/admin/updaterestaurant';
+import { CreateRestaurant } from './component/admin/createrestaurant';
+import { CreateMenu } from './component/admin/createmenu';
+import { UpdateRestaurant } from './component/admin/updaterestaurant';
+import { ManageMenu } from './component/admin/managemenu';
+import {EditMenu} from './component/admin/editMenu';
 
 
 import { AppProvider } from "./component/context";
@@ -79,9 +81,11 @@ function App() {
                 <Route index element={<AdminHome />} />
                 <Route path='manageusers' element={<ManageUsers />} />
                 <Route path='manageres' element={<ManageRestaurants />} />
-                <Route path='manageres/createres' element={<CreateRestaurant/>} />
+                <Route path='manageres/createres' element={<CreateRestaurant />} />
                 <Route path='manageres/createresmenu/:id' element={<CreateMenu />} />
                 <Route path='manageres/updateres/:id' element={<UpdateRestaurant />} />
+                <Route path='managemenu' element={<ManageMenu />} />
+                <Route path='managemenu/editmenu/:id' element={<EditMenu />} />
               </Route>
             </Routes>
           </section>

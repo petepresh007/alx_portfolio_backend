@@ -25,7 +25,7 @@ app.use(cookieParser())
 const cors = require("cors");
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:5174"
+    origin: "http://localhost:5173"
 }));
 
 // Define Routes
@@ -49,8 +49,8 @@ let dbConnection;
 
 async function starter() {
     try {
-        //dbConnection = await connectDB();
-        dbConnection  = await connectDBOnline();
+        dbConnection = await connectDB();
+        //dbConnection  = await connectDBOnline();
         if (dbConnection) {
             console.log('Connected to the database successfully...');
         }

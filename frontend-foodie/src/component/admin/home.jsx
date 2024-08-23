@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAppContext } from '../context';
-import { auth, restaurant } from '../../server';
+import { auth, menu, order, restaurant } from '../../server';
 import { AiOutlineShop, AiOutlineUser } from 'react-icons/ai';
+import {FaHamburger, FaShoppingCart} from 'react-icons/fa';
 
 
 export const AdminHome = () => {
@@ -36,6 +37,37 @@ export const AdminHome = () => {
     }, [dispatch])
 
 
+    useEffect(() => {
+        async function getMenu() {
+            try {
+                const { data } = await axios.get(`${menu}/alladmin`);
+                dispatch({ type: 'SET_ADMIN_MENU', payload: data });
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getMenu()
+    }, [dispatch]);
+
+    useEffect(() => {
+        async function getOrders() {
+            try {
+                const { data } = await axios.get(`${order}/all`);
+                dispatch({ type: 'SET_ADMIN_ORDER', payload: data });
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getOrders()
+    }, [dispatch]);
+
+
+    if (!state.adminGetOrders) {
+        return <div>
+            loading...
+        </div>
+    }
+
     if (!state.adminGetUser) {
         return <div>
             loading...
@@ -44,6 +76,12 @@ export const AdminHome = () => {
 
 
     if (!state.adminGetRestaurant){
+        return <div>
+            loading...
+        </div>
+    }
+
+    if (!state.adminGetMenu) {
         return <div>
             loading...
         </div>
@@ -68,6 +106,22 @@ export const AdminHome = () => {
                         <p>({state.adminGetRestaurant && state.adminGetRestaurant.length})</p>
                     </div>
                     <AiOutlineShop className='admin-home-icon' />
+                </section>
+
+                <section className="admin-home-users">
+                    <div>
+                        <p>MENU</p>
+                        <p>({state.adminGetMenu && state.adminGetMenu.length})</p>
+                    </div>
+                    <FaHamburger className='admin-home-icon' />
+                </section>
+
+                <section className="admin-home-users">
+                    <div>
+                        <p>ORDERS</p>
+                        <p>({state.adminGetOrders && state.adminGetOrders.length})</p>
+                    </div>
+                    <FaShoppingCart className='admin-home-icon' />
                 </section>
             </div>
         </div>

@@ -20,7 +20,7 @@ export const Register = () => {
                 phoneNumber,
                 password
             });
-            alert(`Registered successfully with email:  ${data.user.email}`);
+            alert(`Registered successfully with username: ${data.user}`);
             go('/login');
         } catch (error) {
             alert(error.response.data.msg);

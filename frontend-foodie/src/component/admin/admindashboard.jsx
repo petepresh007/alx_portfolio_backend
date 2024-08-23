@@ -31,7 +31,7 @@ export const Admin = () => {
                     <Link to='/admin/manageusers'>Manage Users</Link>
                     <Link>Manage Orders</Link>
                     <Link to='/admin/manageres'>Manage Restaurant</Link>
-                    <Link>Manage Menu</Link>
+                    <Link to='/admin/managemenu'>Manage Menu</Link>
                 </section>
             </div>
             <Outlet/>

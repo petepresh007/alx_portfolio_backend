@@ -62,6 +62,38 @@ router.post('/create-menu/:restaurantId', adminAuth, upload.single('file'), asyn
 });
 
 
+//edit Menu
+router.put('/update/:menuID', adminAuth, upload.single('file'), async (req, res, next) => {
+    const { menuID } = req.params;
+    const { name, description, price, category, availability, protein, others } = req.body;
+
+    try {
+        const menu = await Menu.findById(menuID);
+        if(!menu){
+            throw new NotFoundError('No menu was found');
+        }
+        const updateMenu = await Menu.findOneAndUpdate({_id : menuID}, {
+            name: name ? name : menu.name,
+            description: description ? description : menu.description,
+            price: price ? price : menu.price,
+            category: category ? category : menu.category,
+            availability: availability ? availability : menu.availability,
+            file: req.file ? req.file.filename : menu.file,
+            restaurant: menu.restaurant,
+            protein: protein ? protein : menu.protein,
+            others: others ? others : menu.others
+        })
+
+        res.status(200).json({msg: 'updated successfully', updateMenu})
+    } catch (error) {
+        if (req.file) {
+            fs.unlinkSync(req.file.path)
+        }
+        next(error)
+    }
+})
+
+
 //delete menu
 router.delete('/del/:menuID', adminAuth, async (req, res, next) => {
     const admin = await Admin.findById(req.admin.id);
@@ -108,6 +140,17 @@ router.get('/all', async(req, res, next) => {
         const all = await Menu.find({})
             .populate('restaurant')
             .sort({createdAt: -1});
+        res.status(200).json(all)
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get('/alladmin', adminAuth, async (req, res, next) => {
+    try {
+        const all = await Menu.find({})
+            .populate('restaurant')
+            .sort({ createdAt: -1 });
         res.status(200).json(all)
     } catch (error) {
         next(error)
