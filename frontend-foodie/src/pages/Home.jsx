@@ -70,7 +70,7 @@ export const Home = () => {
 
     return (
         <div className="">
-            <img src="/image/home-img.png" alt="img" />
+            {/* <img src="/image/home-img.png" alt="img" /> */}
 
             <section className="">
                 {
@@ -93,7 +93,11 @@ export const Home = () => {
             </section>
 
             <>
-                <h1 style={{ textAlign: "center", color: "gray" }}>Menu</h1>
+                <h1 
+                    className="font-[Ojuju] font-bold text-xl md:text-2xl lg:text-3xl"
+                    style={{ textAlign: "center", color: "gray" }}>
+                        Menu
+                </h1>
                 <section className="">
                     {
                         state.menu && state.menu.map(data => {
@@ -116,7 +120,9 @@ export const Home = () => {
             </>
 
             <>
-                <h1 style={{ textAlign: "center", color: "gray" }}>Favourite</h1>
+                <h1
+                    className="font-[Ojuju] font-bold text-xl md:text-2xl lg:text-3xl"
+                    style={{ textAlign: "center", color: "gray" }}>Favourite</h1>
                 <section className="menu">
                     {
                         state.favoriteOrders && state.favoriteOrders.map(data => {
