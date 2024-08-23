@@ -1,32 +1,49 @@
-import { useAppContext } from "../component/context";
-import { order, restaurant, url } from "../server";
-import { useParams, useNavigate, Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useParams } from 'react-router-dom';
+import {useAppContext} from '../component/context';
+import {menu, order, url} from "../server";
+import {useEffect, useState} from "react";
+import axios from 'axios';
 
 
-export const RestaurantOrder = () => {
-    const { orderId, id } = useParams();
-    const { state } = useAppContext();
-
-    const selectedRestaurant = state.restaurants && state.restaurants.find(data => data._id === id);
-    
-    if(selectedRestaurant.menu.length <= 0){
-        return <div>
-            No menu present
-        </div>
-    }
-    const selectedMenu = selectedRestaurant.menu.find(menuItem => menuItem._id === orderId);
-
+export const SelectedMenu = () => {
+    const {state, dispatch} = useAppContext();
+    const {id} = useParams();
+    const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const [deliveryAddress, setDeliveryAddress] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
     const [pack, setPack] = useState('');
 
+    
+    useEffect(() => {
+        async function getMenu() {
+            try {
+                const { data } = await axios.get(`${menu}/all`);
+                dispatch({ type: 'SET_MENU', payload: data });
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        getMenu()
+    }, [dispatch]);
+
+    const selectedMenu = state.menu && state.menu.find(data => data._id === id);
+
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!selectedMenu) {
+        return <div>Menu not found or still loading...</div>;
+    }
+
 
     async function placeAnOrder(e) {
         e.preventDefault();
-        
+
         try {
             const data = {
                 items: [
@@ -51,20 +68,19 @@ export const RestaurantOrder = () => {
         }
     }
 
-
     return (
         <div className="res-order">
             <section className="res-order-center">
                 <img src={`${url}/upload/${selectedMenu.file}`} alt="" height='200px' width='200px' />
             </section>
-            <div>
+            <div className='res-order-center-det'>
                 <h2>{selectedMenu.name}</h2>
                 <p>description: {selectedMenu.description}</p>
-                <div>
+                <div className='ind'>
                     <span>Price: </span>
                     <span>&#8358;{selectedMenu.price}</span>
                 </div>
-                <div>
+                <div className='ind'>
                     <span>Total amount: </span>
                     <span>&#8358;{selectedMenu.price * quantity}</span>
                 </div>
@@ -118,7 +134,7 @@ export const RestaurantOrder = () => {
                 </div>
                 <button>Place order</button>
             </form>
-            <Outlet />
+            {/* <Outlet /> */}
         </div>
-    )
+     )
 }

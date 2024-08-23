@@ -1,16 +1,16 @@
-import {Link, Outlet} from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useAppContext } from "../component/context";
 import { restaurant } from "../server";
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 
 export const SelectedRestaurant = () => {
     const { state, dispatch } = useAppContext();
-    const {id} = useParams();
+    const { id } = useParams();
     const [loading, setLoading] = useState(true)
-    
+
     useEffect(() => {
         async function getRestaurant() {
             try {
@@ -28,7 +28,7 @@ export const SelectedRestaurant = () => {
 
 
 
-    if(loading){
+    if (loading) {
         return (
             <div>
                 loading...
@@ -48,11 +48,20 @@ export const SelectedRestaurant = () => {
                 <h1>PHONE: {selectedRestaurant.phone}</h1>
             </section>
 
+            <div className="search-menu">
+                <form action="">
+                    <input
+                        type="serach"
+                        placeholder="Enter a menu item"
+                    />
+                </form>
+            </div>
+
             <ul>
                 <li><Link to={`/selected-res/${id}/`}>All</Link></li>
                 <li><Link to={`/selected-res/${id}/rice`}>Rice</Link></li>
-                <li><Link to={`/selected-res/${id}/#`}>Beans</Link></li>
-                <li><Link to={`/selected-res/${id}/#`}>Swallow</Link></li>
+                <li><Link to={`/selected-res/${id}/beans`}>Beans</Link></li>
+                <li><Link to={`/selected-res/${id}/swallow`}>Swallow</Link></li>
             </ul>
             <Outlet />
         </div>

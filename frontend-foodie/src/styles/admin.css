@@ -1,0 +1,206 @@
+.admin {
+    margin-top: 1rem;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.admin-message {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: white;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.admin-header {
+    width: 100%;
+    background: white;
+    padding: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fa-user {
+    border-radius: 50%;
+    background: #eee;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-header a {
+    text-decoration: none;
+    color: gray;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.admin-home-users{
+    width: 230px;
+    padding: 1rem;
+    background: #eee;
+}
+.admin-home-users div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+}
+.admin-home-icon{
+    font-size: 120px;
+    width: 100%;
+}
+.admin-home h2{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.dash-user{
+    margin-top: 2rem;
+}
+
+.dash-user-center-det{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    color: gray;
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+.dash-user-center-det p{
+    margin: 0;
+}
+.dash-del{
+    font-size: 30px;
+    cursor: pointer;
+}
+.admin-home-center{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.create-restaurant{
+    margin-top: 5rem;
+    margin-bottom: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-restaurant-center{
+    background: white;
+    width: 400px;
+    padding: 1rem;
+}
+
+.create-restaurant-center input{
+    padding: 1rem;
+    border: none;
+    outline: none;
+    background: #eee;
+    margin-bottom: 1rem;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.create-restaurant-center button{
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: white;
+    background: rgb(91, 91, 247);
+    cursor: pointer;
+}
+
+.create-restaurant-center h1{
+    color: gray;
+}
+
+.dash-res{
+    margin-top: 2rem;
+    font-size: 1.3rem;
+}
+.create-restaurant-main{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    color: gray;
+    background: white;
+}
+.create-restaurant-main h1{
+    margin: 0;
+    cursor: pointer;
+}
+.dash-res-center-det{
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+}
+.dash-res-things{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    margin-bottom: .5rem;
+    color: gray;
+}
+.dash-res-things p{
+    margin: 0;
+}
+
+.create-menu{
+    margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.create-menu select{
+    margin-bottom: 1rem;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #eee;
+}
+.create-menu input[type=file]{
+    display: none;
+}
+.handle-menu-file{
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+.otila{
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.otil-btn{
+    font-size: 30px;
+    cursor: pointer;
+}
+.otil{
+    font-size: 30px;
+}
+
+.res-icon{
+    font-size: 30px;
+    cursor: pointer;
+}

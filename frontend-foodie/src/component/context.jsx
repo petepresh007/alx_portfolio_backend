@@ -11,7 +11,16 @@ const initialState = {
     restaurants: [],
     menu: [],
     cart: [],
-    myOrders: []
+    myOrders: [],
+    notification: [],
+    unreadNotification: [],
+    deliveredOrder: [],
+    swallow: [],
+    rice: [],
+    beans: [],
+    admin: null,
+    adminGetUser: [],
+    adminGetRestaurant: []
     // Add other state properties as needed
 }
 
@@ -24,7 +33,16 @@ const ACTIONS = {
     SET_RESTAURANT: 'SET_RESTAURANT',
     SET_MENU: 'SET_MENU',
     SET_CART: 'SET_CART',
-    SET_ORDERS: 'SET_ORDERS'
+    SET_ORDERS: 'SET_ORDERS',
+    SET_NOTIFICATON: 'SET_NOTIFICATON',
+    SET_UNREAD: 'SET_UNREAD',
+    SET_DELIVERED: 'SET_DELIVERED',
+    SET_SWALLOW: 'SET_SWALLOW',
+    SET_RICE: 'SET_RICE',
+    SET_BEANS: 'SET_BEANS',
+    SET_ADMIN: 'SET_ADMIN',
+    SET_ADMIN_USER: 'SET_ADMIN_USER',
+    SET_ADMIN_RES: 'SET_ADMIN_RES'
     // Add other actions as needed
 };
 
@@ -71,6 +89,51 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 myOrders: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_NOTIFICATON:
+            return {
+                ...state,
+                notification: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_UNREAD:
+            return {
+                ...state,
+                unreadNotification: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_DELIVERED:
+            return {
+                ...state,
+                deliveredOrder: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_SWALLOW:
+            return {
+                ...state,
+                swallow: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_RICE:
+            return {
+                ...state,
+                rice: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_BEANS:
+            return {
+                ...state,
+                beans: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_ADMIN:
+            return {
+                ...state,
+                admin: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_ADMIN_USER:
+            return {
+                ...state,
+                adminGetUser: action.payload, // Update the entire list
+            };
+        case ACTIONS.SET_ADMIN_RES:
+            return {
+                ...state,
+                adminGetRestaurant: action.payload, // Update the entire list
             };
         default:
             return state;

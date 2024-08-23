@@ -1,11 +1,11 @@
-import { auth } from "../server";
+import { adminauth } from "../../server";
 import { useState } from "react";
 import axios from "axios";
-import { useAppContext } from "../component/context";
+import { useAppContext } from "../../component/context";
 import { useNavigate } from "react-router-dom";
 
 
-export const Login = () => {
+export const LoginAdmin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     axios.defaults.withCredentials = true
@@ -16,10 +16,10 @@ export const Login = () => {
     async function login(e) {
         e.preventDefault();
         try {
-            const { data } = await axios.post(`${auth}/login`, { email, password });
-            dispatch({ type: 'SET_USER', payload: data });
+            const { data } = await axios.post(`${adminauth}/login`, { email, password });
+            dispatch({ type: 'SET_ADMIN', payload: data });
             alert(`Welcome ${data.user}`);
-            go('/');
+            go('/admin');
         } catch (error) {
             alert(error.response.data.msg);
         }
@@ -29,7 +29,7 @@ export const Login = () => {
     return (
         <div className="login">
             <section className="login-center">
-                <h1>Login</h1>
+                <h1>Admin</h1>
                 <form action="" onSubmit={login}>
                     <div>
                         <input
@@ -48,13 +48,6 @@ export const Login = () => {
                         />
                     </div>
                     <button>Login</button>
-                    <div className="already-registered">
-                        <div >
-                            <small>Don't have an Account?</small>
-                            <small onClick={() => go('/register')}>Sign Up</small>
-                        </div>
-                        {/* <small>Forget Password</small> */}
-                    </div>
                 </form>
             </section>
         </div>
