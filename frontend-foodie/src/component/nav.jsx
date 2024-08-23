@@ -116,7 +116,7 @@ export const Nav = () => {
                   >
                     <FaSearch className="self-center hidden md: flex" onClick={() => go('/search')} />
                     <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/'>home</Link></li>
-                    <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/orders'>order</Link></li>
+                    <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/orders'>orders</Link></li>
                     <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/restaurant'>restaurants</Link></li>
                     <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/menu'>menu</Link></li>
                     <li>

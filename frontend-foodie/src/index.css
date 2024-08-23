@@ -70,6 +70,11 @@ ul li {
   list-style: none;
 } */
 
+form{
+  font-family: 'Poppins', 'Roboto', sans-serif;
+}
+
+
 .header-stuff {
   width: 100vw;
   color: white;
@@ -266,30 +271,7 @@ ul li {
   color: gray;
 }
 
-.login {
-  margin-top: 10rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.login-center {
-  background: white;
-  padding: 1rem;
-  width: 400px;
-  color: gray;
-  font-size: 1.5rem;
-}
-
-.login-center input {
-  padding: .8rem;
-  border: 1px solid rgba(128, 128, 128, 0.451);
-  outline: none;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  width: 100%;
-}
 
 .already-registered {
   font-size: 1.1rem;
