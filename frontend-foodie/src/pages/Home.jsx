@@ -5,6 +5,7 @@ import axios from "axios";
 import { AiOutlineShop } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { FaMapPin } from "react-icons/fa";
+import FoodieAnimation from "../component/foodieAnimation";
 
 export const Home = () => {
   const { state, dispatch } = useAppContext();
@@ -57,7 +58,7 @@ export const Home = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <div>loading....</div>;
+    return <FoodieAnimation/>;
   }
 
   return (

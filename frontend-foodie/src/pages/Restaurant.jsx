@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {AiOutlineShop} from 'react-icons/ai';
 import {useNavigate} from 'react-router-dom';
+import FoodieAnimation from '../component/foodieAnimation';
 
 
 export const Restaurant = () => {
@@ -29,7 +30,7 @@ export const Restaurant = () => {
 
     if(loading){
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 

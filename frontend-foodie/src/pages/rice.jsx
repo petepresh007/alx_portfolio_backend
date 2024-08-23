@@ -3,6 +3,8 @@ import { restaurant, url } from "../server";
 import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import FoodieAnimation from "../component/foodieAnimation";
+import { FaShoppingCart } from "react-icons/fa";
 
 
 export const Rice = () => {
@@ -31,7 +33,7 @@ export const Rice = () => {
     if (loading) {
         return (
             <div>
-                loading...
+              <FoodieAnimation/>
             </div>
         )
     }
@@ -41,7 +43,7 @@ export const Rice = () => {
 
 
     return (
-        <div className="restaurant-menu">
+        <div className="w-full flex flex-col mx-auto gap-4">
             {
                 selectedRestaurant.menu.length ? (
                     <>
@@ -49,20 +51,25 @@ export const Rice = () => {
                             selectedRestaurant.menu.map((data) => {
                                 return (
                                     <div
-                                        className="restaurant-menu-center"
+                                        className="bg-[#F4EAE1] self-center w-[95%] max-w-[800px] p-2 sm:p-4 rounded-md flex justify-between"
                                         key={data._id}
                                         onClick={() => {
                                             go(`/selected-res/${id}/order/${data._id}`)
                                         }}
                                     >
-                                        <div className="details">
+                                        <div className="font-semibold capitalize content-center">
                                             <p>{data.name}</p>
                                             <small>{data.name}</small>
-                                            <p>Price &#8358;{data.price}</p>
+                                            <p>Price <span className="text-yellow-700">&#8358;</span>{data.price}.00</p>
                                         </div>
-                                        <div className="res-btn-img">
-                                            <img src={`${url}/upload/${data.file}`} alt="" height='60px' width='60px' />
-                                            <button>Add +</button>
+                                        <div className=" w-[100px] sm:w-[150px] max-w-[300px] flex flex-col rounded-sm gap-1 bg-gray-400 text-black sm:p-2">
+                                            <img className="w-full rounded-inherit" src={`${url}/upload/${data.file}`} alt="food-item" />
+                                            <button className="text-xs sm:text-base w-full bg-white font-medium flex justify-center pt-1 gap-1">
+                                                <span>Add to Cart</span> 
+                                                <div className="translate-y-1">
+                                                    <FaShoppingCart/>
+                                                </div>
+                                            </button>
                                         </div>
 
                                     </div>

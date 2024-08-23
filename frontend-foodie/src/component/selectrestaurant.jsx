@@ -4,6 +4,10 @@ import { restaurant } from "../server";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FaMailBulk, FaMapPin, FaStore } from "react-icons/fa";
+import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import FoodieAnimation from '../component/foodieAnimation'
+import '../styles/dropdown.css'
 
 
 export const SelectedRestaurant = () => {
@@ -30,9 +34,7 @@ export const SelectedRestaurant = () => {
 
     if (loading) {
         return (
-            <div>
-                loading...
-            </div>
+                <FoodieAnimation/>
         )
     }
 
@@ -41,18 +43,50 @@ export const SelectedRestaurant = () => {
 
     return (
         <div className="res">
-            <section className="res-header">
-                <h1>NAME: {selectedRestaurant.name}</h1>
-                <h1>ADDRESS: {selectedRestaurant.address}</h1>
-                <h1>EMAIL: {selectedRestaurant.email}</h1>
-                <h1>PHONE: {selectedRestaurant.phone}</h1>
+            <section className="rounded-lg px-4 pt-3 bg-gray-100 text-xs md:text-base flex flex-wrap justify-between font-semibold capitalize">
+                <div className="flex gap-1">
+                    <FaStore className="sm:translate-y-1"/>
+                    <p>{selectedRestaurant.name}</p>
+                </div>
+                <div className="flex gap-1">
+                    <FaMapPin className="sm:translate-y-1"/>
+                    <p>{selectedRestaurant.address}</p>
+                </div>
+
+                <div className="contact sm:hidden relative flex gap-1">
+                    <FaMailBulk/>
+                    <p className=""> Contact &darr; </p>
+                    <div className="dropdown hidden absolute -bottom-[80px] rounded-b-md p-2 pl-4 -right-4 bg-gray-100  flex flex-col ]">
+                        <div className=" flex gap-1 text-sm border-b" >
+                            <AiOutlineMail className="translate-y-1"/>
+                            <p>{selectedRestaurant.email}</p>
+                        </div>
+                        <div className="flex gap-1 text-sm translate-y-2" >
+                            <AiOutlinePhone className="translate-y-1 rotate-180"/>
+                            <p>{selectedRestaurant.phone}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="sm:flex hidden gap-1" >
+                    <AiOutlineMail className="sm:translate-y-1"/>
+                    <p>{selectedRestaurant.email}</p>
+                </div>
+                <div className="sm:flex hidden gap-1" >
+                    <AiOutlinePhone className="sm:translate-y-1 rotate-180"/>
+                    <p>{selectedRestaurant.phone}</p>
+                </div>
+
+
             </section>
 
-            <div className="search-menu">
-                <form action="">
+            <div className=" relative z-0  justify-items-center my-8 ">
+                {/* <AiOutlineSearch className="absolute z-0 right-2 top-2"/> */}
+                <form action="" className="relative bg-white z-0  border border-black w-[80%] rounded-lg  max-w-[300px]">
                     <input
-                        type="serach"
-                        placeholder="Enter a menu item"
+                        className="z-0 rounded-lg w-[inherit] px-2 outline-none bg-white border-none p-1"
+                        type="text"
+                        placeholder="Search for a menu item"
                     />
                 </form>
             </div>

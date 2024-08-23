@@ -46,7 +46,7 @@ function App() {
     <>
       <AppProvider>
         <div className=''>
-          <Nav />
+          <Nav/>
 
           <section className="body">
             <Routes>
