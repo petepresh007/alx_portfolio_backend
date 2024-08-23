@@ -29,7 +29,7 @@ export const Login = () => {
     return (
         <div className="flex grow-1 w-[100vw] h-[80vh] items-center  justify-center">
             <section className="w-[80%] max-w-[350px] bg-orange-700 border-2 border-[#E0E0E0] px-4 py-6  rounded-md space-y-4 ">
-                <h1 className=" text-xl text-center text-white text-2xl font-bold font-[Poppins]">Login</h1>
+                <h1 className=" text-xl text-center text-white text-2xl font-bold font-[Poppins]">Sign In</h1>
                 <form 
                     className="font-[Poppins] space-y-3 md:space-y-4 text-white "
                     action="" onSubmit={login}>

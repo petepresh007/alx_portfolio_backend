@@ -28,7 +28,7 @@ export const Cart = () => {
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Order Status: </span>{data.status}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Price: <span className="text-yellow-600">&#8358;</span></span>{data.totalAmount}</p>
                                     <button 
-                                        className="w-full text-center bg-black lg:hover:bg-green-600 lg:hover:scale-[1.05] duration-500 lg:active:scale-[0.98] text-xl text-white font-semibold" 
+                                        className="w-full text-center bg-green-600  lg:bg-black lg:hover:bg-green-600 lg:hover:scale-[1.05] duration-500 lg:active:scale-[0.98] text-xl text-white font-semibold" 
                                         aria-label="pay for items" 
                                         onClick={()=>go(`/payus/${data._id}`)}
                                     >

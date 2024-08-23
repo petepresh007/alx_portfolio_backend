@@ -12,7 +12,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Baloo 2', sans-serif;
 }
 
 body {
@@ -171,8 +171,10 @@ form{
 }
 
 .shop {
-  width: 100px;
-  height: 100px;
+  background: white 0.5;
+  width: 100%;
+  align-self: center;
+  height: 70%;
 }
 
 .restaurant-center {
