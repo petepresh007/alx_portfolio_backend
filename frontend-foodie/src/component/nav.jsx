@@ -102,12 +102,19 @@ export const Nav = () => {
                 </div>
                 <span className="cart-num">{state.cart.length ? state.cart.length : ''}</span>
             </div> */}
-            <nav className="p-2 lg:px-4 rounded-2xl lg:rounded-3xl bg-white/40 shadow-lg">
+            <nav className="flex items-center gap-4 p-2 px-3 lg:px-4 rounded-2xl lg:rounded-3xl bg-white/80 shadow-lg">
+              <Link to='/cart' className="flex relative">
+                <AiOutlineShoppingCart className="w-6 cursor-pointer text-black"/>  
+                <div className=" absolute w-2 h-2 -top-2 -right-2 rounded-full text-[10px]">
+                  <p className="absolute top-0 right-1 p-1 py-0 font-semibold text-white bg-red-500 rounded-[inherit]">{state.cart.length ? state.cart.length : ''}</p>
+                </div>
+              </Link>
+              
                 <ul 
-                  className="flex gap-4 lg:gap-6 text-xs sm:text-sm md:text-base lg:text-lg text-shadow-sm font-medium text-[#FAF3E0] items-center "
-                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'}}
+                  className="flex gap-4 lg:gap-6 text-xs sm:text-sm md:text-base lg:text-lg text-shadow-sm font-medium text-orange-500 items-center "
+                  // style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'}}
                   >
-                    <FaSearch className="self-center" onClick={() => go('/search')} />
+                    <FaSearch className="self-center hidden md: flex" onClick={() => go('/search')} />
                     <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/'>home</Link></li>
                     <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/orders'>order</Link></li>
                     <li className="md:hover:scale-[1.05] md:active:scale-[0.98] ease-in-out duration-100 "><Link to='/restaurant'>restaurants</Link></li>
@@ -115,7 +122,7 @@ export const Nav = () => {
                     <li>
                         {
                             !state.user ? <Link to='/login'>login</Link> : <AiOutlineUser
-                                className="fill-white"
+                                className="fill-black"
                                 style={{ color: "gray", cursor: "pointer" }}
                                 onClick={() => {
                                     go('/profile')
