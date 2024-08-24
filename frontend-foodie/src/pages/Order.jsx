@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { order } from "../server";
 import { useAppContext } from "../component/context";
 import { AiOutlineDelete, AiOutlineHeart } from 'react-icons/ai';
+import { FaHeart } from "react-icons/fa";
 
 
 export const Order = () => {
@@ -60,20 +61,22 @@ export const Order = () => {
             {
                 state.myOrders ? ( 
                 state.myOrders.map((data) => {
-                    return <section className="my-orders-center" key={data._id}>
-                        <p>{data._id}</p>
-                        <p>{data.items[0].menuItem.name}</p>
-                        <p>&#8358;{data.totalAmount}</p>
-                        <AiOutlineDelete className="order-del" onClick={()=> del(data._id)} />
-                        <span onClick={() => getFavorite(data._id)}>
-                            {
-                                data.favorite ? (
-                                    <AiOutlineHeart className="order-heart" />
-                                    ):(
-                                        <AiOutlineHeart className="not-picked"/>
-                                    )
-                            }
-                        </span>
+                    return <section className="font-semibold h-[fit-content] pt-4 px-5 rounded-lg bg-[#fffdd0]" key={data._id}>
+                        <div className="w-full flex justify-between">
+                            <p>{data._id}</p>
+                            <p>{data.items[0].menuItem.name}</p>
+                            <p><span className="text-yellow-700">&#8358;</span>{data.totalAmount}.00</p>
+                            <AiOutlineDelete className="order-del cursor-pointer" onClick={()=> del(data._id)} />
+                            <span className="cursor-pointer active:scale-[.98]" onClick={() => getFavorite(data._id)}>
+                                {
+                                    data.favorite ? (
+                                        <FaHeart className="order-heart" />
+                                        ):(
+                                            <AiOutlineHeart className="not-picked"/>
+                                        )
+                                }
+                            </span>
+                        </div>
                     </section> 
                 
                 })

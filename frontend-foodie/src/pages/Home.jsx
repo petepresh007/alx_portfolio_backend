@@ -62,107 +62,126 @@ export const Home = () => {
   }
 
   return (
-    <div className="w-full px-2 lg:px-2  space-y-8 mt-6">
+    <div className="w-full px-2 lg:px-2  space-y-8 mt-6 pb-4">
       {/* <img src="/image/home-img.png" alt="img" /> */}
 
       <section className="w-full ">
         <div className="max-w-6xl mx-auto grid gap-6 lg:gap-14 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
-            {state.restaurants &&
+          {state.restaurants &&
             state.restaurants.map((data) => {
-                return (
+              return (
                 <div
-                    className=" lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-500 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 rounded-md overflow-hidden"
-                    key={data._id}
-                    onClick={() => {
+                  className=" lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-500 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 rounded-md overflow-hidden"
+                  key={data._id}
+                  onClick={() => {
                     go(`/selected-res/${data._id}`);
-                    }}
-                >   
-                    <AiOutlineShop className="shop" />
-                    <div className=" capitalize border-t-2 px-2 pt-2 lg:pt-4 font-semibold flex flex-col justify-between">
-                        <h3 className="text-base lg:text-lg"> {data.name}</h3>
-                        <div className="flex gap-1">
-                            <FaMapPin/>
-                            <p className="text-sm lg:text-lg">{data.address}</p>
-                        </div>
+                  }}
+                >
+                  <AiOutlineShop className="shop" />
+                  <div className=" capitalize border-t-2 px-2 pt-2 lg:pt-4 font-semibold flex flex-col justify-between">
+                    <h3 className="text-base lg:text-lg"> {data.name}</h3>
+                    <div className="flex gap-1">
+                      <FaMapPin />
+                      <p className="text-sm lg:text-lg">{data.address}</p>
                     </div>
+                  </div>
                 </div>
-                );
+              );
             })}
         </div>
       </section>
 
-        <div className="flex flex-col gap-4 md:gap-6 pt-2  md:pt-[30px] lg:pt-[50px]">
-            <h1
-            className="font-[Ojuju] font-bold text-xl md:text-2xl lg:text-3xl"
-            style={{ textAlign: "center", color: "gray" }}
-            >
-            Menu
-            </h1>
-            <section className="w-full font-baloo">
-            <div className="max-w-6xl mx-auto grid gap-6 lg:gap-12 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
-                {state.menu &&
-                state.menu.map((data) => {
-                    return (
-                    <div
-                        className="lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-700 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 bg-orange-500 rounded-md overflow-hidden"
-                        key={data._id}
-                        onClick={() => {
-                        go(`/selected-menu/${data._id}`);
-                        }}
-                    >
-                        <img
-                        className="w-full h-32 md:h-48 object-cover"
-                        src={`${url}/upload/${data.file}`}
-                        alt={data.name}
-                        />
-                        <div className="p-2 lg:pt-2 lg:pb-4 px-4">
-                        <p className="text-center text-base lg:text-lg text-white font-semibold capitalize tracking-wider">
-                            {data.name}
-                        </p>
-                        <button className="font-[Roboto]  w-full bg-white text-orange-500 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300">
-                            Checkout
-                        </button>
-                        </div>
+      <div className="flex flex-col gap-4 md:gap-6 pt-2  md:pt-[30px] lg:pt-[50px]">
+        <h1
+          className="font-[Ojuju] font-bold text-xl md:text-2xl lg:text-3xl"
+          style={{ textAlign: "center", color: "gray" }}
+        >
+          Menu
+        </h1>
+        <section className="w-full font-baloo">
+          <div className="max-w-6xl mx-auto grid gap-6 lg:gap-12 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
+            {state.menu &&
+              state.menu.map((data) => {
+                return (
+                  <div
+                    className="lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-700 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 bg-orange-500 rounded-md overflow-hidden"
+                    key={data._id}
+                    onClick={() => {
+                      go(`/selected-menu/${data._id}`);
+                    }}
+                  >
+                    <img
+                      className="w-full h-32 md:h-48 object-cover"
+                      src={`${url}/upload/${data.file}`}
+                      alt={data.name}
+                    />
+                    <div className="p-2 lg:pt-2 lg:pb-4 px-4">
+                      <p className="text-center text-base lg:text-lg text-white font-semibold capitalize tracking-wider">
+                        {data.name}
+                      </p>
+                      <button
+                        aria-label="proceed to checkout"
+                        className="font-[Roboto]  w-full bg-white text-orange-500 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300"
+                      >
+                        Checkout
+                      </button>
                     </div>
-                    );
-                })}
-            </div>
-            </section>
+                  </div>
+                );
+              })}
+          </div>
+        </section>
       </div>
 
       <div className="flex flex-col gap-4 md:gap-6 pt-2  md:pt-[30px] lg:pt-[50px]">
-            <h1
-            className="font-[Ojuju] font-bold text-xl md:text-2xl lg:text-3xl"
-            style={{ textAlign: "center", color: "gray" }}
-            >
-            Favourite
-            </h1>
-            <section className="w-full font-baloo">
+        <h1
+          className="font-[Ojuju] font-bold text-xl md:text-2xl lg:text-3xl"
+          style={{ textAlign: "center", color: "gray" }}
+        >
+          Favourite
+        </h1>
+        <section className="w-full font-baloo">
+          <div className="max-w-6xl mx-auto grid gap-6 lg:gap-12 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
             {state.favoriteOrders &&
-                state.favoriteOrders.map((data) => {
+              state.favoriteOrders.map((data) => {
                 return (
-                    <div key={data._id}>
+                  <div
+                    className="lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-700 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 bg-orange-500 rounded-md overflow-hidden"
+                    key={data._id}
+                  >
                     {data.items.map((data) => {
-                        return (
-                        <div className="menu-center" key={data.menuItem._id}>
-                            <img
+                      return (
+                        <div className="lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-700 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 bg-green-600 rounded-md overflow-hidden" 
+                            key={data.menuItem._id}>
+                          <img
+                            className="w-full h-32 md:h-48 object-cover"
                             src={`${url}/upload/${data.menuItem.file}`}
                             alt=""
-                            />
-                            <p>{data.menuItem.name}</p>
-                            <button>Checkout</button>
+                          />
+                          <div className="p-2 lg:pt-2 lg:pb-4 px-4">
+                            <p className="text-center text-base lg:text-lg text-white font-semibold capitalize tracking-wider">
+                              {data.menuItem.name}
+                            </p>
+                            <button
+                              aria-label="proceed to checkout"
+                              className="font-[Roboto]  w-full bg-orange-300 text-gray-700 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300"
+                            >
+                              Checkout
+                            </button>
+                          </div>
                         </div>
-                        );
+                      );
                     })}
                     {/* <div className="menu-center" key={data._id}>
-                                            <img src={`${url}/upload/${data.file}`} alt="" />
-                                            <p>{data.name}</p>
-                                            <button>Checkout</button>
-                                        </div> */}
-                    </div>
+                                                <img src={`${url}/upload/${data.file}`} alt="" />
+                                                <p>{data.name}</p>
+                                                <button>Checkout</button>
+                                            </div> */}
+                  </div>
                 );
-                })}
-            </section>
+              })}
+          </div>
+        </section>
       </div>
     </div>
   );
