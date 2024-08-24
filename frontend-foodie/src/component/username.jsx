@@ -2,6 +2,7 @@ import axios from "axios";
 import {useAppContext} from "../component/context";
 import { auth } from "../server";
 import { useState, useEffect } from "react";
+import FoodieAnimation from "./foodieAnimation";
 
 
 export const EditUsername = () => {
@@ -25,7 +26,7 @@ export const EditUsername = () => {
 
     if(!state.user){
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 
