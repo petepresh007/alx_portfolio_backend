@@ -23,10 +23,16 @@ app.use(cookieParser())
 
 
 const cors = require("cors");
+// app.use(cors({
+//     credentials: true,
+//     origin: "http://localhost:5173"
+// }));
+
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:5173"
+    origin: "https://foodie-two-delta.vercel.app"
 }));
+
 
 // Define Routes
 app.use('/api/auth', require('./routes/auth'));
