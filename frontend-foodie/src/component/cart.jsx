@@ -7,7 +7,7 @@ export const Cart = () => {
     const { state } = useAppContext();
     const go = useNavigate();
 
-
+    
     return (
         <div>
             {
@@ -24,7 +24,7 @@ export const Cart = () => {
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Payment Method: </span>{data.paymentMethod}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Payment Status: </span>{data.paymentStatus}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Quantity: </span>{data.quantity}</p>
-                                    <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Restaurant: </span>{data.restaurant.name}</p>
+                                    <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Restaurant: </span>{data.restaurant ? data.restaurant.name : 'No restuarant'}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Order Status: </span>{data.status}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Price: <span className="text-yellow-600">&#8358;</span></span>{data.totalAmount}</p>
                                     <button 

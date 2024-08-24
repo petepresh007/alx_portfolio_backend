@@ -89,8 +89,8 @@ export const Nav = () => {
             console.log(error)
         }
     }
-
-
+    
+    
     return (
     <header className="relative z-100  mt-2 md:mt-4 lg:mt-6 sticky top-2 mb-4 md:mb-8 lg:mb-12 ">
         <div className={`w-full flex justify-center items-center ${isSticky ? 'sticky' : ''}`}>
