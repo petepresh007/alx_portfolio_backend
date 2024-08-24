@@ -31,18 +31,18 @@ export const OrderDelivered = () => {
 
 
     return (
-        <div className='delivered'>
-            <div className='delivered-center'>
+        <div className='w-full flex justify-center'>
+            <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 gap-y-4 md:gap-y-8 '>
                 {
                     state.deliveredOrder && state.deliveredOrder.map((data)=> {
-                        return <div key={data._id} className='delivered-center-details'>
-                            <h3>id: {data._id}</h3>
-                            <p>Menu: {data.items[0].menuItem.name}</p>
-                            <p>Price: {data.totalAmount}</p>
-                            <p>Payment Method: {data.paymentMethod}</p>
-                            <p>Status: {data.status}</p>
-                            <p>Address: {data.deliveryAddress}</p>
-                            <p>Date: {data.orderDate}</p>
+                        return <div key={data._id} className='font-semibold bg-gray-100 p-4 capitalize shadow-md md:shadow-lg '>
+                            <h3>id: <span className='pl-2 uppercase font-medium'>{data._id}</span></h3>
+                            <p>Menu: <span className='pl-2 uppercase font-medium'>{data.items[0].menuItem.name}</span></p>
+                            <p>Price: <span className='pl-2 uppercase font-medium'>&#8358;{data.totalAmount}.00</span></p>
+                            <p>Payment Method: <span className='pl-2 uppercase font-medium'>{data.paymentMethod}</span></p>
+                            <p>Status: <span className='pl-2 uppercase font-medium'>{data.status}</span></p>
+                            <p>Address: <span className='pl-2 uppercase font-medium'>{data.deliveryAddress}</span></p>
+                            <p>Date: <span className='pl-2 uppercase font-medium'>{data.orderDate}</span></p>
                         </div>
                     })
                 }
