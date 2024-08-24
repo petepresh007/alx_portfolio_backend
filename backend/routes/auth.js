@@ -58,7 +58,7 @@ router.post('/register', async (req, res, next) => {
                 //res.json({ token, user: user.name });
                 res.cookie('token', token, {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+                    secure: true,//process.env.NODE_ENV === 'production', // Use secure cookies in production
                     maxAge: 360000 * 1000, // Cookie expiration time in milliseconds
                     sameSite: 'none'
                 })
@@ -108,8 +108,9 @@ router.post('/login', async (req, res, next) => {
                 if (err) throw err;
                 res.cookie('token', token, {
                     httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+                    secure: true,//process.env.NODE_ENV === 'production', // Use secure cookies in production
                     maxAge: 360000 * 1000, // Cookie expiration time in milliseconds
+                    sameSite:'none'
                 })
 
                 res.status(200).json({ user: user.name, id: user._id, phone: user.phoneNumber });
