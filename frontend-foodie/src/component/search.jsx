@@ -26,14 +26,17 @@ export const Search = () => {
 
 
     return (
-        <div className='search-item'>
-            <div className="search-item-center">
+        <div className='w-[100vw] overflow-x-none mt-8 px-2'>
+            <div className="w-full flex flex-col gap-5 items-center">
+                <h1 className='font-semibold border-b border-gray-500 md:text-xl '>Search for Restaurants and Menu items</h1>
                 <form action="" onChange={handleSearch}>
                     <input
+                        className='border border-black rounded-xl p-1 px-4 text-base'
+                        aria-label='search for restaurants and menu items'
                         type="search"
                         value={term}
                         onChange={(e) => setTerm(e.target.value)}
-                        placeholder="Restaurant Menu"
+                        placeholder="...banku"
                     />
                 </form>
 
