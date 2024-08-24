@@ -3,6 +3,7 @@ import {useAppContext} from "../component/context";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {order} from '../server';
+import { FaShoppingCart } from "react-icons/fa";
 
 
 export const Cart = () => {
@@ -30,8 +31,11 @@ export const Cart = () => {
             {
                 state.cart ? (
                     <div className="w-full flex flex-col items-center mt-6 gap-4">
-                        <h1 className="text-bold text-2xl lg:text-3xl font-bold font-['Ojuju']">Cart</h1>
-                        <div className="w-[90%] lg:p-4 flex flex-wrap justify-center md:justify-between">
+                        <div className="flex gap-2 border-b border-black"> 
+                            <h1 className="text-bold text-2xl lg:text-3xl font-bold font-['Ojuju']">Cart</h1>
+                            <FaShoppingCart size={20} className=" self-center -translate-y-1"/>
+                        </div>
+                        <div className="w-[90%] lg:p-4 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
                         {
                             state.cart.map((data)=>{
                                 return <div key={data._id} className="bg-gray-100 p-4 rounded-md w-[fit-content] mb-4">
@@ -44,7 +48,7 @@ export const Cart = () => {
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Restaurant: </span>{data.restaurant ? data.restaurant.name : 'No restuarant'}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Order Status: </span>{data.status}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Price: <span className="text-yellow-600">&#8358;</span></span>{data.totalAmount}</p>
-                                    <p onClick={() => deleteOrde(data._id)} className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Delete Order</span></p>
+                                    <p onClick={() => deleteOrde(data._id)} className="cursor-pointer lg:active:scale-[0.98] w-full text-center bg-red-600 text-base font-semibold uppercase"><span className="font-bold normal-case text-white ">Delete Order</span></p>
                                     <button 
                                         className="w-full text-center bg-green-600  lg:bg-black lg:hover:bg-green-600 lg:hover:scale-[1.05] duration-500 lg:active:scale-[0.98] text-xl text-white font-semibold" 
                                         aria-label="pay for items" 

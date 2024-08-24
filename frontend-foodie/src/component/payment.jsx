@@ -54,7 +54,7 @@ export const Pay = () => {
 
 
     return (
-        <div className='w-[100%] min-h-screen items-center flex flex-col gap-4 justify-center'>
+        <div className='w-[100%] min-h-[80vh] items-center flex flex-col gap-4 justify-center'>
             <p className='text-lg sm:text-xl font-bold'>Choose Payment Option</p>
             <PayPalScriptProvider options={{ "client-id": 'AWP89tBwNOzNTiDNiATjgR61LyfTPD8Y35M-BG4sQEPP0mxxuQ74j6GfRz-WIXKfM9O5py-oko-BvDje' }}>
                 <div className=' bg-gray-100 flex justify-center p-4 py-6'>
