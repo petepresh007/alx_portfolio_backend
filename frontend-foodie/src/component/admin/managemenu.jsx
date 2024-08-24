@@ -4,6 +4,7 @@ import {menu} from '../../server';
 import {useAppContext} from '../context';
 import {AiOutlineEdit, AiOutlineDelete} from 'react-icons/ai';
 import {useNavigate} from 'react-router-dom';
+import FoodieAnimation from '../foodieAnimation';
 
 
 export const ManageMenu = () => {
@@ -38,27 +39,46 @@ export const ManageMenu = () => {
     
     if (!state.adminGetMenu){
         return <div>
-            loading...
+           <FoodieAnimation/>
         </div>
     }
 
 
     return (
-        <div>
-            <div>
+        <div className='w-full mt-6'>
+            <div className='w-full space-y-5'>
                 {
                     state.adminGetMenu && state.adminGetMenu.map((data)=>{
-                        return <div key={data._id}>
-                            <p>{data.name}</p>
-                            <p>{data.price}</p>
-                            {data.restaurant ? <p>{data.restaurant.name}</p>:''}
-                            <AiOutlineDelete 
-                                onClick={()=> del(data._id)}
-                            />
-                            <AiOutlineEdit
-                                onClick={() => go(`/admin/managemenu/editmenu/${data._id}`)}
-                            />
-                        </div>
+                        return (
+                            <div 
+                            className='hover:scale-[1.01] cursor-pointer duration-100 font-medium w-full grid grid-cols-4 gap-4 items-center shadow-md px-4 py-2'
+                            key={data._id}
+                          >
+                            <p className='translate-y-2 lg:text-lg truncate'>{data.name}</p>
+                            <p className='translate-y-2 lg:text-lg'>&#8358;{data.price}.00</p>
+                            {data.restaurant ? (
+                              <p className='translate-y-2 lg:text-lg truncate'>{data.restaurant.name}</p>
+                            ) : (
+                              <span></span>
+                            )}
+                            <div className='translate-y-2 flex justify-end gap-4'>
+                              <AiOutlineDelete
+                                className='hover:scale-[1.2] hover:fill-red-600 cursor-pointer'
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  del(data._id);
+                                }}
+                              />
+                              <AiOutlineEdit
+                                className='hover:scale-[1.2] hover:fill-green-800 cursor-pointer'
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  go(`/admin/managemenu/editmenu/${data._id}`);
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )
                     })
                 }
             </div>

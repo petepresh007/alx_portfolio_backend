@@ -4,6 +4,7 @@ import { restaurant } from '../../server';
 import { useEffect } from "react";
 import { useAppContext } from '../context';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
+import FoodieAnimation from '../foodieAnimation';
 
 
 export const ManageRestaurants = () => {
@@ -41,7 +42,7 @@ export const ManageRestaurants = () => {
 
     if (!state.adminGetRestaurant) {
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 

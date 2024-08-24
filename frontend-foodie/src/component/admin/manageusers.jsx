@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { auth } from '../../server';
 import { AiOutlineDelete } from 'react-icons/ai';
+import FoodieAnimation from '../foodieAnimation';
 
 
 export const ManageUsers = () => {
@@ -39,27 +40,33 @@ export const ManageUsers = () => {
     
     if (!state.adminGetUser) {
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 
 
-    return <div className='dash-user'>
-        <div className='dash-user-center'>
-            {
-                state.adminGetUser && state.adminGetUser.map((data) => {
-                    return <div className='dash-user-center-det' key={data._id}>
-                        <p>{data._id}</p>
-                        <p>{data.name}</p>
-                        <p>{data.email}</p>
-                        <p>{data.date}</p>
-                        <AiOutlineDelete
-                            className='dash-del'
-                            onClick={()=> delUser(data._id, data.name)}
-                        />
-                    </div>
-                })
-            }
+    return (
+        <div className='w-full mt-4'>
+
+            <div className='flex flex-col gap-4 md:gap-6'>
+                {
+                    state.adminGetUser && state.adminGetUser.map((data) => {
+                        return (
+                            <div className='cursor-auto flex justify-between shadow-md px-4' key={data._id}>
+                                <p className='text-xs sm:text-sm lg:text-base font-medium translate-y-2'>{data._id}</p>
+                                <p className='text-xs sm:text-sm lg:text-base font-medium translate-y-2'>{data.name}</p>
+                                <p className='text-xs sm:text-sm lg:text-base font-medium translate-y-2'>{data.email}</p>
+                                <p className='text-xs sm:text-sm lg:text-base font-medium translate-y-2'>{data.date}</p>
+                                <AiOutlineDelete
+                                    aria-label='delete user'
+                                    className='dash-del hover:fill-red-500 fill-current'
+                                    onClick={()=> delUser(data._id, data.name)}
+                                />
+                            </div>
+                        );
+                    })
+                };
+            </div>
         </div>
-    </div>
+)
 }
