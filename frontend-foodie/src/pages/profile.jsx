@@ -13,6 +13,7 @@ import {
 import { useNavigate, Outlet, Link } from 'react-router-dom';
 import { notification } from '../server';
 import {FaCircle} from "react-icons/fa";
+import FoodieAnimation from '../component/foodieAnimation';
 
 export const Profile = () => {
     const { state, dispatch } = useAppContext();
@@ -62,7 +63,7 @@ export const Profile = () => {
 
     if (!state.user) {
         <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 
@@ -70,73 +71,77 @@ export const Profile = () => {
 
     return (
         <>
-            <div className='profile'>
-                <div className="profile-center">
-                    <section className="profile-header">
+            <div className=''>
+                <div className="profile-center pb-24">
+                    <section className="text-white font-semibold px-4 py-2 bg-orange-500 w-full flex justify-between items-center">
                         <div>
-                            <h1>Welcome {state.user && state.user.user.username}</h1>
-                            <p>user id: {state.user && state.user.user.id}</p>
+                            <h1 className='text-lg sm:text-xl lg:text-3xl'>Welcome, {state.user && state.user.user.username}</h1>
+                            <p className='text-xs sm:text-sm' >user id: {state.user && state.user.user.id}</p>
                         </div>
-                        <button onClick={() => logout()}>Logout</button>
+                        <button className='bg-red-500 rounded-md p-2 active:scale-[.98] self-end' onClick={() => logout()}>Logout</button>
                     </section>
 
-                    <section className="profile-body">
-                        <div>
-                            <span>
-                                <AiOutlineBoxPlot />
+                    <section className="w-[85%] mx-auto mt-4 space-y-3">
+                        <Link to='/profile/order' className='lg:hover:scale-[1.04] duration-100 flex w-full items-center justify-between p-2 bg-white/20 shadow-md'>
+                            <div className='flex translate-y-2 gap-2 font-medium text-base md:text-lg'>
+                                <AiOutlineBoxPlot className='translate-y-1' />
                                 <p>Orders</p>
-                            </span>
-                            <AiOutlineCaretRight onClick={() => go('/profile/order')} />
-                        </div>
+                            </div>
+                            <AiOutlineCaretRight/>
+                        </Link>
 
-                        <div>
-                            <span>
-                                <div className='notification-inbox'>
-                                    <AiOutlineInbox />
-                                    {state.unreadNotification.length !== 0 ? <FaCircle className='notification-inbox-caret' /> : '' }
+                        <Link to='/profile/inbox' className='lg:hover:scale-[1.04] duration-100  flex w-full items-center justify-between p-2 bg-white/20 shadow-md'>
+                            <div className='flex translate-y-2 gap-2 font-medium text-base md:text-lg'>
+                                <div className='relative'>
+                                    <AiOutlineInbox className='translate-y-1' />
+                                    {state.unreadNotification.length !== 0 ? <FaCircle className='absolute w-2 -top-1 -right-1 fill-red-500' /> : '' }
                                 </div>
                                 
                                 <p>Inbox</p>
-                            </span>
-                            <AiOutlineCaretRight onClick={() => go('/profile/inbox')} />
-                        </div>
+                            </div>
+                            <AiOutlineCaretRight />
+                        </Link>
 
-                        <div>
-                            <span>
-                                <AiOutlineMessage />
+                        <Link to=''  className='lg:hover:scale-[1.04] duration-100 flex w-full items-center justify-between p-2 bg-white/20 shadow-md' >
+                            <div className='flex translate-y-2 gap-2 font-medium text-base md:text-lg'>
+                                <AiOutlineMessage className='translate-y-1' />
                                 <p>Reviews</p>
-                            </span>
+                            </div>
                             <AiOutlineCaretRight />
-                        </div>
+                        </Link>
 
-                        <div>
-                            <span>
-                                <AiOutlineHeart />
+                        <Link to='' className='lg:hover:scale-[1.04] duration-100 flex w-full items-center justify-between p-2 bg-white/20 shadow-md'>
+                            <div className='flex translate-y-2 gap-2 font-medium text-base md:text-lg'>
+                                <AiOutlineHeart className='translate-y-1' />
                                 <p>Saved Items</p>
-                            </span>
+                            </div>
                             <AiOutlineCaretRight />
-                        </div>
+                        </Link>
 
-                        <div>
-                            <span>
-                                <AiOutlineSearch />
+                        <Link to='' className='lg:hover:scale-[1.04] duration-100 flex w-full items-center justify-between p-2 bg-white/20 shadow-md'>
+                            <div className='flex translate-y-2 gap-2 font-medium text-base md:text-lg'>
+                                <AiOutlineSearch className='translate-y-1' />
                                 <p>Recently Searched</p>
-                            </span>
+                            </div>
                             <AiOutlineCaretRight />
-                        </div>
+                        </Link>
                     </section>
 
-                    <section className="profile-settings">
-                        <h1>Account settings</h1>
-                        <div>
-                            <p>Address</p>
-                            <AiOutlineCaretRight />
-                        </div>
+                    <section className="w-[85%] mx-auto mt-4 lg:mt-8 space-y-3">
+                        <h1 className='text-center text-xl md:text-2xl font-bold'>Account settings</h1>
+                        <Link to=''  className='lg:hover:scale-[1.04] flex items-center duration-100 p-2 bg-white/20 shadow-md'>
+                            <div className='w-full flex justify-between translate-y-2 font-medium text-base md:text-lg'>
+                                <p>Address</p>
+                                <AiOutlineCaretRight className='translate-y-1' />
+                            </div>
+                        </Link>
 
-                        <div>
-                            <p>Manage account</p>
-                            <AiOutlineCaretRight onClick={() => go('/profile/manageaccount')} />
-                        </div>
+                        <Link to='/profile/manageaccount'  className='lg:hover:scale-[1.04] duration-100 flex w-full items-centerp-2 bg-white/20 shadow-md'>
+                            <div className='w-full flex justify-between translate-y-2 font-medium text-base md:text-lg'>
+                                <p>Manage account</p>
+                                <AiOutlineCaretRight className='translate-y-1' />
+                            </div>
+                        </Link>
                     </section>
                 </div>
 

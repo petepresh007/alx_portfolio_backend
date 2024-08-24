@@ -3,7 +3,7 @@ import { Nav } from "./nav";
 
 const animationsY = {
   initial: { opacity: 0, y: -100 },
-  animate: { opacity: 1, y: 0 },
+  animate: { opacity: 1, y: 0},
   exit: { opacity: 0, y: -100 },
 };
 
@@ -17,7 +17,7 @@ const fadeInRight = {
   // Moves component along the y-axis
   return (
     <motion.div
-      className="w-full"
+      className="w-full sticky top-2 z-50 "
       variants={animationsY}
       initial="initial"
       animate="animate"

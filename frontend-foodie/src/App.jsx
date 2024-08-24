@@ -50,7 +50,7 @@ function App() {
   return (
     <>
       <AppProvider>
-        <div className=''>
+        <div className='sticky top-2'>
           <AnimatePresence mode='wait'>
             <AnimateY key={location.pathname}/>
           </AnimatePresence>
