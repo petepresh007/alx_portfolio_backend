@@ -135,6 +135,7 @@ router.put('/add-protein/:id', adminAuth, async (req, res, next) => {
     }
 })
 
+
 router.get('/all', async(req, res, next) => {
     try {
         const all = await Menu.find({})

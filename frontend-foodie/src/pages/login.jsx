@@ -20,6 +20,7 @@ export const Login = () => {
             dispatch({ type: 'SET_USER', payload: data });
             alert(`Welcome ${data.user}`);
             go('/');
+            window.location.reload()
         } catch (error) {
             alert(error.response.data.msg);
         }

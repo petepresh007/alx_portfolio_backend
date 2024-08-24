@@ -1,11 +1,28 @@
 import {useState, useEffect} from "react";
 import {useAppContext} from "../component/context";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {order} from '../server';
 
 
 export const Cart = () => {
-    const { state } = useAppContext();
+    const { state, dispatch } = useAppContext();
     const go = useNavigate();
+
+    async function deleteOrde(id){
+        try {
+            const confirmation = confirm('Do you want to delete this order?');
+            if(confirmation){
+                const {data} = await axios.delete(`${order}/del-cart/${id}`);
+                alert(data.msg)
+                dispatch({ type: 'SET_CART', payload: data.data });
+                //console.log(data);
+            }
+        } catch (error) {
+            alert(error.response.data.msg);
+            //console.log(error);
+        }
+    }
 
     
     return (
@@ -27,6 +44,7 @@ export const Cart = () => {
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Restaurant: </span>{data.restaurant ? data.restaurant.name : 'No restuarant'}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Order Status: </span>{data.status}</p>
                                     <p className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Price: <span className="text-yellow-600">&#8358;</span></span>{data.totalAmount}</p>
+                                    <p onClick={() => deleteOrde(data._id)} className="text-base font-semibold uppercase"><span className="font-bold normal-case text-indigo-500">Delete Order</span></p>
                                     <button 
                                         className="w-full text-center bg-green-600  lg:bg-black lg:hover:bg-green-600 lg:hover:scale-[1.05] duration-500 lg:active:scale-[0.98] text-xl text-white font-semibold" 
                                         aria-label="pay for items" 

@@ -7,7 +7,7 @@ import axios from "axios";
 
 export const RestaurantOrder = () => {
     const { orderId, id } = useParams();
-    const { state } = useAppContext();
+    const { state, dispatch } = useAppContext();
 
     const selectedRestaurant = state.restaurants && state.restaurants.find(data => data._id === id);
     
@@ -45,6 +45,7 @@ export const RestaurantOrder = () => {
             const res = await axios.post(`${order}/place-order`, data, {
                 withCredentials: true
             });
+            dispatch({ type: 'SET_CART', payload: res.data.data });
             alert(`You have successfully placed an order with the id: ${res.data.msg._id}`);
         } catch (error) {
             alert(error.response.data.msg);

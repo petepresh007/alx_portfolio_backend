@@ -8,6 +8,7 @@ const Admin = require('../models/Admin');
 const { sendMail } = require('../middleware/sendEmail');
 require("dotenv").config();
 const Notification = require('../models/notification');
+const Restaurant = require('../models/Restaurant');
 
 
 /**ORDER ITEM */
@@ -50,7 +51,7 @@ router.post('/place-order', auth, async function (req, res, next) {
         //if (!restaurant || restaurant.length === 0)
 
 
-        if (!restaurant || !totalAmount || !deliveryAddress || !allowedPaymentMethods.includes(paymentMethod) || !allowedPacks.includes(pack)) {
+        if (!totalAmount || !deliveryAddress || !allowedPaymentMethods.includes(paymentMethod) || !allowedPacks.includes(pack)) {
             throw new BadrequestError('fill the provided feilds accurately to place an order');
         }
 
@@ -85,8 +86,14 @@ router.post('/place-order', auth, async function (req, res, next) {
 
             await newNotification.save()
 
+            const data = await Order.find({ user: req.user.id, status: "Pending" })
+                .populate('user', 'name email')
+                .populate('items.menuItem', 'name price')
+                .populate('restaurant', 'name address')
+                .sort({ orderDate: -1 });
+
             await sendMail(from, to, subject, message);
-            res.status(201).json({ msg: newOrder });
+            res.status(201).json({ msg: newOrder, data: data });
         }
 
     } catch (error) {
@@ -402,5 +409,53 @@ router.put('/delivered/:orderId', adminAuth, async (req, res, next) => {
     }
 });
 
+
+//delete cart
+router.delete('/del-cart/:cartId', auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+        throw new NotFoundError('No user was found with the provided id')
+    }
+    try {
+        const order = await Order.findById(req.params.cartId);
+        if (!order) {
+            throw new NotFoundError('No order was found with the provided id');
+        }
+        const del = await Order.findOneAndDelete(
+            {
+                _id: req.params.cartId,
+                user: req.user.id,
+                status: 'Pending'
+            }
+        );
+        if (del) {
+            const setNotification = new Notification({
+                user: user._id,
+                message: `You have deleted your order with id #${order._id}.`,
+                type: 'order_deleted',
+                orderId: order._id
+            });
+            await setNotification.save();
+
+            //send email
+            const to = user.email;
+            const from = process.env.SMTP_MAIL
+            const subject = `Hi ${user.name}`;
+            const message = `
+                Your order with id: ${order._id} has been deleted by you. you can place the order again
+            `
+            await sendMail(from, to, subject, message)
+
+            const data = await Order.find({ user: req.user.id, status: "Pending" })
+                .populate('user', 'name email')
+                .populate('items.menuItem', 'name price')
+                .populate('restaurant', 'name address')
+                .sort({ orderDate: -1 });
+            res.status(200).json({ msg: 'You have deleted your order successfully', data: data });
+        }
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router

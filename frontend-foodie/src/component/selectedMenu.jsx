@@ -65,11 +65,13 @@ export const SelectedMenu = () => {
                 withCredentials: true
             });
             alert(`You have successfully placed an order with the id: ${res.data.msg._id}`);
+            dispatch({ type: 'SET_CART', payload: res.data.data });
             go('/cart')
         } catch (error) {
             alert(error.response.data.msg);
         }
     }
+
 
     return (
         <div className='w-full flex justify-center'>
@@ -118,6 +120,7 @@ export const SelectedMenu = () => {
                             aria-label='choose method of payment'
                             required
                         >
+                            <option value="">Payment Options</option>
                             <option value="Card">Card</option>
                             <option value="Cash">Cash</option>
                             <option value="Online">Online</option>
@@ -135,6 +138,7 @@ export const SelectedMenu = () => {
                             aria-label='choose pack size'
                             required
                         >
+                            <option value="">Select Pack</option>
                             <option value="Big Pack">Big Pack</option>
                             <option value="Branded Pack">Branded Pack</option>
                         </select>
