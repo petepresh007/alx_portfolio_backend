@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FaLocationArrow } from "react-icons/fa";
-import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { useAppContext } from "./context";
 import { useEffect, useState } from "react";
 import axios from "axios";

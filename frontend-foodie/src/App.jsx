@@ -35,63 +35,73 @@ import { EditMenu } from './component/admin/editMenu';
 import { OrderPage } from './component/admin/orders';
 import { SingleOrder } from './component/admin/singleOrder';
 
-
+import { AnimatePresence } from 'framer-motion';
+import { AnimateY, FadeInRight } from './component/pageAnimations';
 import { AppProvider } from "./component/context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Route, Routes, Link } from "react-router-dom";
 
+
 function App() {
   const go = useNavigate();
+  const location = useLocation();
 
   return (
     <>
       <AppProvider>
         <div className=''>
-          <Nav/>
+          <AnimatePresence mode='wait'>
+            <AnimateY key={location.pathname}/>
+          </AnimatePresence>
 
           <section className="body">
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/orders' element={<Order />} />
-              <Route path='/restaurant' element={<Restaurant />} />
-              <Route path='/menu' element={<Menu />} />
-              <Route path='/selected-res/:id' element={<SelectedRestaurant />}>
-                <Route index element={<AllMenuRes />} />
-                <Route path='rice' element={<Rice />} />
-                <Route path='beans' element={<Beans />} />
-                <Route path='swallow' element={<Swallow />} />
-                <Route path='order/:orderId' element={<RestaurantOrder />} />
-              </Route>
-              <Route path='/login' element={<Login />} />
-              <Route path='/cart' element={<Cart />} />
-              <Route path='/payus/:id' element={<Pay />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/selected-menu/:id' element={<SelectedMenu />} />
+            <AnimatePresence mode='wait'>
+              <FadeInRight key={location.pathname}>
 
-              <Route path='/profile' element={<Profile />}></Route>
-              <Route path='/profile/inbox' element={<Message />} />
-              <Route path='/profile/order' element={<OrderDelivered />} />
-              <Route path='/profile/manageaccount' element={<ManageAccount />} />
-              <Route path='/profile/editusername' element={<EditUsername />} />
-              <Route path='/profile/editphonenumber' element={<EditPhoneNumber />} />
-              <Route path='/profile/changepassword' element={<ChangePassword />} />
-              <Route path='/search' element={<Search />} />
-              <Route path='/loginadmin' element={<LoginAdmin />} />
+                <Routes location={location}>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/orders' element={<Order />} />
+                  <Route path='/restaurant' element={<Restaurant />} />
+                  <Route path='/menu' element={<Menu />} />
+                  <Route path='/selected-res/:id' element={<SelectedRestaurant />}>
+                    <Route index element={<AllMenuRes />} />
+                    <Route path='rice' element={<Rice />} />
+                    <Route path='beans' element={<Beans />} />
+                    <Route path='swallow' element={<Swallow />} />
+                    <Route path='order/:orderId' element={<RestaurantOrder />} />
+                  </Route>
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/cart' element={<Cart />} />
+                  <Route path='/payus/:id' element={<Pay />} />
+                  <Route path='/register' element={<Register />} />
+                  <Route path='/selected-menu/:id' element={<SelectedMenu />} />
 
-              <Route path='/admin' element={<Admin />}>
-                <Route index element={<AdminHome />} />
-                <Route path='manageusers' element={<ManageUsers />} />
-                <Route path='manageres' element={<ManageRestaurants />} />
-                <Route path='manageres/createres' element={<CreateRestaurant />} />
-                <Route path='manageres/createresmenu/:id' element={<CreateMenu />} />
-                <Route path='manageres/updateres/:id' element={<UpdateRestaurant />} />
-                <Route path='managemenu' element={<ManageMenu />} />
-                <Route path='managemenu/editmenu/:id' element={<EditMenu />} />
-                <Route path='manageorders' element={<OrderPage />} />
-                <Route path='manageorders/order/:id' element={<SingleOrder />} />
-              </Route>
-            </Routes>
+                  <Route path='/profile' element={<Profile />}></Route>
+                  <Route path='/profile/inbox' element={<Message />} />
+                  <Route path='/profile/order' element={<OrderDelivered />} />
+                  <Route path='/profile/manageaccount' element={<ManageAccount />} />
+                  <Route path='/profile/editusername' element={<EditUsername />} />
+                  <Route path='/profile/editphonenumber' element={<EditPhoneNumber />} />
+                  <Route path='/profile/changepassword' element={<ChangePassword />} />
+                  <Route path='/search' element={<Search />} />
+                  <Route path='/loginadmin' element={<LoginAdmin />} />
+
+                  <Route path='/admin' element={<Admin />}>
+                    <Route index element={<AdminHome />} />
+                    <Route path='manageusers' element={<ManageUsers />} />
+                    <Route path='manageres' element={<ManageRestaurants />} />
+                    <Route path='manageres/createres' element={<CreateRestaurant />} />
+                    <Route path='manageres/createresmenu/:id' element={<CreateMenu />} />
+                    <Route path='manageres/updateres/:id' element={<UpdateRestaurant />} />
+                    <Route path='managemenu' element={<ManageMenu />} />
+                    <Route path='managemenu/editmenu/:id' element={<EditMenu />} />
+                    <Route path='manageorders' element={<OrderPage />} />
+                    <Route path='manageorders/order/:id' element={<SingleOrder />} />
+                  </Route>
+                </Routes>
+              </FadeInRight>
+            </AnimatePresence>
           </section>
 
         </div>
