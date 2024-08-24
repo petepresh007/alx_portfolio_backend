@@ -37,41 +37,60 @@ export const CreateMenu = () => {
 
     return (
         <div className='create-menu'>
-            <div className="create-restaurant-center">
-                <h1>Menu</h1>
-                <form onSubmit={HandleMenu}>
-                    <div>
+            <div className="space-y-2 w-[80%] max-w-[300px] shadow-md p-4 border">
+                <h1 className='text-center font-bold text-base md:text-lg'>Menu</h1>
+                <form
+                    className='block space-y-4' 
+                    onSubmit={HandleMenu}
+                >
+                    <div className='flex flex-col'>
+                        <label htmlFor='name' className='font-medium'>Dish</label>
                         <input
+                            id='name'
+                            className='shadow-sm px-2 py-1 border font-semibold'
                             type="text"
                             placeholder='name'
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            required
                         />
                     </div>
 
-                    <div>
+                    <div className='flex flex-col'>
+                        <label htmlFor='description' className='font-medium'>Dish Description</label>
                         <input
+                            id='description'
+                            className='shadow-sm px-2 py-1 border font-semibold'
                             type="text"
                             placeholder='description'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            required
                         />
                     </div>
 
-                    <div>
+                    <div className='flex flex-col'>
+                        <label htmlFor='price' className='font-medium'>Price</label>
                         <input
+                            id='price'
+                            className='shadow-sm px-2 py-1 border font-semibold'
                             type="number"
-                            placeholder='price'
+                            placeholder='1000.00'
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
+                            required
                         />
 
                     </div>
 
-                    <div>
+                    <div className='flex flex-col'>
+                        <label  htmlFor='meal-type' className='font-medium'>Meal type</label>
                         <select
+                            id='meal-type'
+                            className=''
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
+                            required
                         >
                             <option value="">Select</option>
                             <option value="Rice">Rice</option>
@@ -80,6 +99,7 @@ export const CreateMenu = () => {
                         </select>
                     </div>
 
+                    <p className='font-semibold'>Choose display Image</p>    
                     <div className='handle-menu-file'>
                         <input
                             type="file"
@@ -87,6 +107,7 @@ export const CreateMenu = () => {
                             accept='image/*'
                             name='file'
                             onChange={(e) => setFile(e.target.files[0])}
+                            required
                         />
                         {
                             file ? `${file.name}`
@@ -97,7 +118,7 @@ export const CreateMenu = () => {
                             <AiOutlineUpload className='otil-btn' />
                         </label>
                     </div>
-                    <button>CREATE</button>
+                    <button className='w-full bg-blue-500 hover:bg-green-500 p-2 font-bold text-white active:scale-[.98]'>CREATE</button>
                 </form>
             </div>
         </div>

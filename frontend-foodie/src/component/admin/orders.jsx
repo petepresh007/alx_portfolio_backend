@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAppContext } from "../context";
 import { order } from "../../server";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 
 export const OrderPage = () => {
   const { state, dispatch } = useAppContext();
@@ -35,7 +35,7 @@ export const OrderPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="w-full mt-4 space-y-4">
+    <div className="w-full mt-4 space-y-8">
       <h1 className="font-semibold text-center text-lg md:text-2xl">
         Users&apos; <span className="pl-2">Orders</span>
       </h1>
@@ -43,11 +43,10 @@ export const OrderPage = () => {
         {state.adminGetOrders &&
           state.adminGetOrders.map((data) => {
             return (
-              <div key={data._id} className="w-full flex justify-between font-medium capitalize shadow-md px-2">
+              <Link to={`/admin/manageorders/order/${data._id}`} key={data._id} className="cursor-pointer w-full flex justify-between font-medium capitalize shadow-md px-2">
                 <p
-                    className="translate-y-2 text-xs sm:text-base lg:text-lg"
-                  onClick={() => go(`/admin/manageorders/order/${data._id}`)}
-                  style={{ cursor: "pointer" }}
+                className="translate-y-2 text-xs sm:text-base lg:text-lg"
+                style={{ cursor: "pointer" }}
                 >
                   id: {data._id}
                 </p>
@@ -55,8 +54,13 @@ export const OrderPage = () => {
                 <p className="translate-y-2 text-xs sm:text-base lg:text-lg">payment: {data.paymentMethod}</p>
                 <p className="translate-y-2 text-xs sm:text-base lg:text-lg">Payment status: {data.paymentStatus}</p>
                 <p className="translate-y-2 text-xs sm:text-base lg:text-lg">status: {data.status}</p>
-                <AiOutlineDelete className="cursor-pointer h-8 translate-y-2 hover:fill-red-500" onClick={() => del(data._id)} />
-              </div>
+                <AiOutlineDelete className="cursor-pointer h-8 translate-y-2 hover:fill-red-500" 
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    del(data._id)
+                    }} />
+              </Link>
             );
           })}
       </div>

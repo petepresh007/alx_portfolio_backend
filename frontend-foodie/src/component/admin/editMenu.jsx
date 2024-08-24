@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AiOutlineFile, AiOutlineUpload } from 'react-icons/ai';
 import axios from 'axios';
 import { menu } from '../../server';
-
+import { useNavigate } from 'react-router-dom';
 
 export const EditMenu = () => {
     const { id } = useParams();
@@ -37,8 +37,8 @@ export const EditMenu = () => {
 
     return (
         <div className='create-menu'>
-            <div className="create-restaurant-center">
-                <h1>Menu</h1>
+            <div className="create-restaurant-center border shadow-md">
+                <h1 className='text-center font-semibold text-lg'>Menu</h1>
                 <form onSubmit={HandleMenu}>
                     <div>
                         <input

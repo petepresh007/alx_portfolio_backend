@@ -31,13 +31,13 @@ export const CreateRestaurant = () => {
 
     return (
         <div className="create-restaurant">
-            <div className="create-restaurant-center">
-                <h1>Restaurant</h1>
+            <div className="create-restaurant-center border shadow-md">
+                <h1 className='text-center font-bold text-2xl'>Restaurant</h1>
                 <form onSubmit={handleRestaurant}>
                     <div>
                         <input
                             type="text"
-                            placeholder='username'
+                            placeholder='restaurant name'
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -46,7 +46,7 @@ export const CreateRestaurant = () => {
                     <div>
                         <input
                             type="text"
-                            placeholder='address'
+                            placeholder='restaurant address'
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                         />

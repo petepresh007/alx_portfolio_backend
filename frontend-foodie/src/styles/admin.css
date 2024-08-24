@@ -88,7 +88,7 @@
 }
 
 .create-restaurant{
-    margin-top: 5rem;
+    margin-top: 2rem;
     margin-bottom: 6rem;
     display: flex;
     align-items: center;
@@ -108,7 +108,8 @@
     background: #eee;
     margin-bottom: 1rem;
     width: 100%;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
 .create-restaurant-center button{
@@ -160,7 +161,7 @@
 }
 
 .create-menu{
-    margin-top: 5rem;
+    margin-top: 2vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,7 +171,7 @@
 .create-menu select{
     margin-bottom: 1rem;
     width: 100%;
-    padding: 1rem;
+    padding: 2px;
     font-size: 1rem;
     border: 1px solid #eee;
 }

@@ -54,7 +54,7 @@ export const ManageMenu = () => {
                             className='hover:scale-[1.01] cursor-pointer duration-100 font-medium w-full grid grid-cols-4 gap-4 items-center shadow-md px-4 py-2'
                             key={data._id}
                           >
-                            <p className='translate-y-2 lg:text-lg truncate'>{data.name}</p>
+                            <p className='lowercase translate-y-2 lg:text-lg truncate'>{data.name}</p>
                             <p className='translate-y-2 lg:text-lg'>&#8358;{data.price}.00</p>
                             {data.restaurant ? (
                               <p className='translate-y-2 lg:text-lg truncate'>{data.restaurant.name}</p>

@@ -4,6 +4,7 @@ import { useAppContext } from '../context';
 import { auth, menu, order, restaurant } from '../../server';
 import { AiOutlineShop, AiOutlineUser } from 'react-icons/ai';
 import {FaHamburger, FaShoppingCart} from 'react-icons/fa';
+import FoodieAnimation from '../foodieAnimation';
 
 
 export const AdminHome = () => {
@@ -64,62 +65,62 @@ export const AdminHome = () => {
 
     if (!state.adminGetOrders) {
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 
     if (!state.adminGetUser) {
         return <div>
-            loading...
+           <FoodieAnimation/>
         </div>
     }
 
 
     if (!state.adminGetRestaurant){
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 
     if (!state.adminGetMenu) {
         return <div>
-            loading...
+           <FoodieAnimation/>
         </div>
     }
 
 
     return (
         <div className="admin-home">
-            <h2>Available Details</h2>
-            <div className="admin-home-center">
-                <section className="admin-home-users">
-                    <div>
+            <h2 className='text-xl md:text-2xl font-bold'>Insights</h2>
+            <div className="w-full grid grid-cols-4 gap-4 ">
+                <section className="bg-blue-500 py-4">
+                    <div className='flex font-bold gap-3 justify-center text-white text-3xl'>
+                        <p>{state.adminGetUser && state.adminGetUser.length}</p>
                         <p>USERS</p>
-                        <p>({state.adminGetUser && state.adminGetUser.length})</p>
                     </div>
                     <AiOutlineUser className='admin-home-icon' />
                 </section>
 
-                <section className="admin-home-users">
-                    <div>
+                <section className="bg-orange-500 py-4">
+                    <div className='flex font-bold gap-3 justify-center text-white text-3xl'>
+                        <p>{state.adminGetRestaurant && state.adminGetRestaurant.length}</p>
                         <p>RESTAURANTS</p>
-                        <p>({state.adminGetRestaurant && state.adminGetRestaurant.length})</p>
                     </div>
                     <AiOutlineShop className='admin-home-icon' />
                 </section>
 
-                <section className="admin-home-users">
-                    <div>
-                        <p>MENU</p>
-                        <p>({state.adminGetMenu && state.adminGetMenu.length})</p>
+                <section className="bg-indigo-500 py-4">
+                    <div className='flex font-bold gap-3 justify-center text-white text-3xl'>
+                        <p>{state.adminGetMenu && state.adminGetMenu.length}</p>
+                        <p>MENU ITEMS</p>
                     </div>
                     <FaHamburger className='admin-home-icon' />
                 </section>
 
-                <section className="admin-home-users">
-                    <div>
+                <section className="bg-green-500 py-4">
+                    <div  className='flex font-bold gap-3 justify-center text-white text-3xl'>
+                        <p>{state.adminGetOrders && state.adminGetOrders.length}</p>
                         <p>ORDERS</p>
-                        <p>({state.adminGetOrders && state.adminGetOrders.length})</p>
                     </div>
                     <FaShoppingCart className='admin-home-icon' />
                 </section>
