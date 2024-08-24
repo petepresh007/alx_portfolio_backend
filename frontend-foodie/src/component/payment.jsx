@@ -5,6 +5,7 @@ import { useAppContext } from "../component/context";
 import { useParams } from "react-router-dom";
 import { payment } from "../server";
 import {useNavigate} from 'react-router-dom';
+import FoodieAnimation from './foodieAnimation';
 
 
 export const Pay = () => {
@@ -47,17 +48,23 @@ export const Pay = () => {
 
     if (!exactOrder) {
         return <div>
-            order loading....
+            <FoodieAnimation/>
         </div>
     }
 
 
     return (
-        <PayPalScriptProvider options={{ "client-id": 'AWP89tBwNOzNTiDNiATjgR61LyfTPD8Y35M-BG4sQEPP0mxxuQ74j6GfRz-WIXKfM9O5py-oko-BvDje' }}>
-            <PayPalButtons
-                createOrder={handleCreateOrder}
-                onApprove={handleApprove}
-            />
-        </PayPalScriptProvider>
+        <div className='w-[100%] min-h-screen items-center flex flex-col gap-4 justify-center'>
+            <p className='text-lg sm:text-xl font-bold'>Choose Payment Option</p>
+            <PayPalScriptProvider options={{ "client-id": 'AWP89tBwNOzNTiDNiATjgR61LyfTPD8Y35M-BG4sQEPP0mxxuQ74j6GfRz-WIXKfM9O5py-oko-BvDje' }}>
+                <div className=' bg-gray-100 flex justify-center p-4 py-6'>
+                    <PayPalButtons
+                        className='w-[250px] sm:w-[400px]'
+                        createOrder={handleCreateOrder}
+                        onApprove={handleApprove}
+                    />
+                </div>
+            </PayPalScriptProvider>
+        </div>
     );
 }

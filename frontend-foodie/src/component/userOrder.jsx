@@ -2,6 +2,7 @@ import { order } from '../server';
 import { useEffect } from "react";
 import axios from 'axios';
 import { useAppContext } from "../component/context";
+import FoodieAnimation from './foodieAnimation';
 
 
 export const OrderDelivered = () => {
@@ -24,7 +25,7 @@ export const OrderDelivered = () => {
     
     if (!state.deliveredOrder) {
         return <div>
-            loading...
+            <FoodieAnimation/>
         </div>
     }
 
