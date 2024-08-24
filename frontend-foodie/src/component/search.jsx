@@ -46,7 +46,7 @@ export const Search = () => {
                     {results.map((restaurant) => (
                         <div
                             key={restaurant._id}
-                            className='search-item-details'
+                            className='cursor-pointer ease-in-out duration-300 md:hover:scale-[1.07] active:scale-[.98] w-full text-xs rounded-md font-semibold p-4 pb-0 bg-indigo-200 sm:text-base lg:text-lg flex justify-between capitalize gap-5 my-2'
                             onClick={() => {
                                 go(`/selected-res/${restaurant._id}`)
                             }}

@@ -61,7 +61,7 @@ export const Order = () => {
             {
                 state.myOrders ? ( 
                 state.myOrders.map((data) => {
-                    return <section className="font-semibold h-[fit-content] pt-4 px-5 rounded-lg bg-[#fffdd0]" key={data._id}>
+                    return <section className="text-xs md:text-base overflow-x-none font-semibold h-[fit-content] pt-4 px-5 rounded-lg bg-[#fffdd0]" key={data._id}>
                         <div className="w-full flex justify-between">
                             <p>{data._id}</p>
                             <p>{data.items[0].menuItem.name}</p>
