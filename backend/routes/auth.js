@@ -236,9 +236,11 @@ router.put('/change-password', auth, async (req, res, next) => {
 
         res.cookie('token', '', {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            expires: new Date(0)
+            secure: true,//process.env.NODE_ENV === 'production',
+            expires: new Date(0),
+            sameSite: 'none'
         })
+
 
         res.status(200).json({ msg: 'password changed successfully...' });
     } catch (error) {
@@ -369,8 +371,9 @@ router.delete('/user-delete-account', auth, async (req, res, next) => {
         const del = await User.findByIdAndDelete(req.user.id);
         res.cookie('token', '', {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            expires: new Date(0)
+            secure: true,//process.env.NODE_ENV === 'production',
+            expires: new Date(0),
+            sameSite: 'none'
         })
         res.status(200).json({msg: `Goodbye ${del.name}`});
     } catch (error) {  
