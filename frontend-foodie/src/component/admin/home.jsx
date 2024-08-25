@@ -92,7 +92,7 @@ export const AdminHome = () => {
     return (
         <div className="admin-home">
             <h2 className='text-xl md:text-2xl font-bold'>Insights</h2>
-            <div className="w-full grid grid-cols-4 gap-4 ">
+            <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 ">
                 <section className="bg-blue-500 py-4">
                     <div className='flex font-bold gap-3 justify-center text-white text-3xl'>
                         <p>{state.adminGetUser && state.adminGetUser.length}</p>

@@ -60,7 +60,7 @@ export const Menu = () => {
                   <p className="text-center text-sm sm:text-base lg:text-lg text-white font-semibold capitalize tracking-wider">
                     {data.name}
                   </p>
-                  <button className="font-[Roboto]  w-full bg-white text-orange-500 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300">
+                  <button className="self-end font-[Roboto]  w-full bg-white text-orange-500 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300">
                     Checkout
                   </button>
                 </div>
