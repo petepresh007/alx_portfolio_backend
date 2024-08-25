@@ -76,7 +76,7 @@ export const SelectedMenu = () => {
     return (
         <div className='w-full flex justify-center'>
 
-            <div className="res-order bg-gray-200 pb-4 rounded-md min-w-[290px] max-w-[500px] ">
+            <div className="res-order border bg-gray-200 pb-4 rounded-md min-w-[290px] max-w-[500px] ">
                 <section className="w-[100%] flex justify-center rounded-md rounded-b-none">
                     <img className='rounded-[inherit] w-full' src={`${url}/upload/${selectedMenu.file}`} alt={`picture of ${selectedMenu.name}`} />
                 </section>
