@@ -30,7 +30,7 @@ const cors = require("cors");
 
 app.use(cors({
     credentials: true,
-    origin: "https://foodie-two-delta.vercel.app"
+    origin: "https://fooodie.vercel.app"
 }));
 
 
