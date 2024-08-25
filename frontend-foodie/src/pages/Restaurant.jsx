@@ -53,7 +53,7 @@ export const Restaurant = () => {
                   <h3 className="text-base lg:text-lg"> {data.name}</h3>
                   <div className="flex gap-1">
                     <FaMapPin />
-                    <p className="text-sm lg:text-lg">{data.address}</p>
+                    <p className="text-xs sm:text-sm text-gray-600">{data.address}</p>
                   </div>
                 </div>
               </div>

@@ -82,7 +82,7 @@ export const Home = () => {
                     <h3 className="text-base lg:text-lg"> {data.name}</h3>
                     <div className="flex gap-1">
                       <FaMapPin className="translate-y-1" />
-                      <p className="text-xs sm:text-sm lg:text-base text-gray-500 ">{data.address}</p>
+                      <p className="text-xs sm:text-sm  text-gray-600 ">{data.address}</p>
                     </div>
                   </div>
                 </div>
