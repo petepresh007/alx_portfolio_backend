@@ -148,6 +148,9 @@ export const Home = () => {
                   <div
                     className="lg:hover:scale-[1.05] hover:shadow-xl shadow-gray-700 duration-300 cursor-pointer w-full max-w-[300px] border border-gray-300 bg-orange-500 rounded-md overflow-hidden"
                     key={data._id}
+                    onClick={() => {
+                      go(`/selected-menu/${data._id}`);
+                    }}
                   >
                     {data.items.map((data) => {
                       return (
