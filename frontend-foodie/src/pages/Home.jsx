@@ -164,7 +164,7 @@ export const Home = () => {
                             </p>
                             <button
                               aria-label="proceed to checkout"
-                              className="font-[Roboto]  w-full bg-orange-300 text-gray-700 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300"
+                              className="font-[Roboto]  w-full bg-white text-gray-700 text-base font-bold rounded-md lg:hover:bg-white/90 lg:hover:text-green-800 transition duration-300"
                             >
                               Checkout
                             </button>
