@@ -133,7 +133,7 @@ export const Nav = () => {
                         state.admin ? (
                             <>
                                 <Link to='/admin'>Admin</Link>
-                                <Link to='/loginadmin' onClick={logoutAdmin}>logout</Link>
+                                <Link onClick={logoutAdmin}>logout</Link>
                             </>
                         ) : ""
                     }
