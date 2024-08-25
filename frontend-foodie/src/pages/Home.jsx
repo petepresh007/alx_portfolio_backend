@@ -81,8 +81,8 @@ export const Home = () => {
                   <div className=" capitalize border-t-2 px-2 pt-2 lg:pt-4 font-semibold flex flex-col justify-between">
                     <h3 className="text-base lg:text-lg"> {data.name}</h3>
                     <div className="flex gap-1">
-                      <FaMapPin />
-                      <p className="text-sm lg:text-lg">{data.address}</p>
+                      <FaMapPin className="translate-y-1" />
+                      <p className="text-xs sm:text-sm lg:text-base text-gray-500 ">{data.address}</p>
                     </div>
                   </div>
                 </div>
