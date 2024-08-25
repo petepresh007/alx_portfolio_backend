@@ -137,14 +137,19 @@ router.get('/stay-loggedin', async function (req, res) {
 //@route   POST api/auth/logout
 // @desc    logout a user
 // @access  Public
+// router.post('/logout', (req, res) => {
+//     res.cookie('admintoken', '', {
+//         httpOnly: true,
+//         secure: true,//process.env.NODE_ENV === 'production',
+//         expires: new Date(0),
+//         sameSite:'none'
+//     })
+//     res.send(true)
+// })
+
 router.post('/logout', (req, res) => {
-    res.cookie('admintoken', '', {
-        httpOnly: true,
-        secure: true,//process.env.NODE_ENV === 'production',
-        expires: new Date(0),
-        sameSite:'none'
-    })
-    res.send(true)
+    res.clearCookie('admintoken', { httpOnly: true, sameSite: 'none', secure: true })
+        .json(true);
 })
 
 module.exports = router;
